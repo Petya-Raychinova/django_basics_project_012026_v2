@@ -1,10 +1,10 @@
 from django.forms import DecimalField
 from django.shortcuts import render, redirect
+from django.db.models import Sum
+
 from .forms import ConditionForm, PurchasingForm
 from .models import ConditionsPercent, PurchasingAmount
-from django.db.models import Sum, ExpressionWrapper, F
 
-# създава форма за попълване, валидира входа и записва в базата
 
 def index(request):
     condition_form = ConditionForm()
@@ -20,47 +20,49 @@ def index(request):
         elif "add_purchase" in request.POST:
             purchasing_form = PurchasingForm(request.POST)
             if purchasing_form.is_valid():
-                eik = purchasing_form.cleaned_data["EIK"]
+                eik = purchasing_form.cleaned_data["eik"]
                 amount = purchasing_form.cleaned_data["purchasing_amount"]
 
-                condition = ConditionsPercent.objects.get(EIK=eik)
+                # запис по eik (БЕЗ condition)
                 PurchasingAmount.objects.create(
-                    condition=condition,
+                    eik=eik,
                     purchasing_amount=amount
                 )
                 return redirect("index")
 
     return render(
         request,
-        "bonus_percent/index.html",
+        "index.html",
         {
             "condition_form": condition_form,
             "purchasing_form": purchasing_form,
         }
     )
 
-# калкулация на самия бонус
 
 def bonus_report(request):
-    report = (
+    # суми по доставчик
+    purchases = (
         PurchasingAmount.objects
-        .select_related("condition")
-        .values(
-            "condition__EIK",
-            "condition__supplier_name",
-            "condition__percent_condition",
-        )
-        .annotate(
-            total_amount=Sum("purchasing_amount"),
-            bonus=ExpressionWrapper(
-                Sum("purchasing_amount") * F("condition__percent_condition") / 100,
-                output_field=DecimalField(max_digits=15, decimal_places=2)
-            )
-        )
+        .values("eik")
+        .annotate(total_amount=Sum("purchasing_amount"))
     )
+
+    # добавяне на процент и бонус (Python логика)
+    report = []
+    for p in purchases:
+        condition = ConditionsPercent.objects.get(eik=p["eik"])
+        bonus = p["total_amount"] * condition.percent_condition / 100
+        report.append({
+            "eik": p["eik"],
+            "supplier_name": condition.supplier_name,
+            "percent_condition": condition.percent_condition,
+            "total_amount": p["total_amount"],
+            "bonus": bonus,
+        })
 
     return render(
         request,
-        "bonus_percent/bonus_report.html",
+        "bonus_report.html",
         {"report": report}
     )

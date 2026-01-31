@@ -1,0 +1,59 @@
+<!-- bonus_percent/bonus_report.html -->
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title>Bonus report</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 6px 8px;
+            text-align: right;
+        }
+        th {
+            background: #f2f2f2;
+        }
+        th:first-child,
+        td:first-child,
+        td:nth-child(2) {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Справка бонуси по доставчик</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>ЕИК</th>
+            <th>Доставчик</th>
+            <th>Процент бонус</th>
+            <th>Обща сума покупки</th>
+            <th>Бонус</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in report %}
+        <tr>
+            <td>{{ row.eik }}</td>
+            <td>{{ row.supplier_name }}</td>
+            <td>{{ row.percent_condition }} %</td>
+            <td>{{ row.total_amount }}</td>
+            <td>{{ row.bonus }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Няма данни</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>

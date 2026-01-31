@@ -1,6 +1,6 @@
 from django.db import models
 
-# таблица с доставчици
+# таблица с доставчици; Един доставчик може да има само едно условие
 class ConditionsPercent(models.Model):
     eik = models.CharField(
         max_length = 13,
@@ -20,10 +20,10 @@ class ConditionsPercent(models.Model):
     def __str__(self):
         return f"{self.supplier_name} ({self.percent_condition})"
 
+# Един доставчик може да има няколко реда с покупки
 class PurchasingAmount(models.Model):
     eik = models.CharField(
         max_length = 13,
-        unique = True,
         verbose_name = "ЕИК на доставчик"
     )
     purchasing_amount = models.DecimalField(
@@ -34,3 +34,4 @@ class PurchasingAmount(models.Model):
 
     def __str__(self):
         return f"{self.eik} ({self.purchasing_amount})"
+
