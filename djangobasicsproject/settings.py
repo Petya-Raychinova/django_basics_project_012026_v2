@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+# залагат се отделно, за да се разграничават когато са писани допълнително от зададените изначално
 PROJECT_APPS = [
     'bonuspromo',
     'bonuspercent',
@@ -79,9 +80,13 @@ WSGI_APPLICATION = 'djangobasicsproject.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "django_progect012026",
+        "USER": "postgres",
+        "PASSWORD": "PErahome001",
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
     }
 }
 
