@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<a href="{% url 'nav' %}">← Обратно към менюто</a>
+
+<h1>Въвеждане на % покупни бонуси и отчет </h1>
+
+<a href="{% url 'bonuspercent:bonus_report' %}">
+    Към бонус отчета
+</a>
+
+<hr>
+
+<h2>Добави доставчик и % бонус</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ condition_form.as_p }}
+    <button type="submit" name="add_condition">Запис на доставчик</button>
+</form>
+
+<hr>
+
+<h2>Добави покупка по покупни цени без ДДС</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ purchasing_form.as_p }}
+    <button type="submit" name="add_purchase">Запис на покупка</button>
+</form>
+
+
+</body>
+</html>

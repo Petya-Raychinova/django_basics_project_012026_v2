@@ -1,7 +1,9 @@
 from django.urls import path
-from . import views
+from .views import index, bonus_report
+
+app_name = "bonuspercent"
 
 urlpatterns = [
-    path("", views.index, name="index"),
-    path("bonus-report/", views.bonus_report, name="bonus_report"),
+    path("", index, name="index"), # форми за попълванв
+    path("report/", bonus_report, name="bonus_report"), # отчет за % бонус
 ]

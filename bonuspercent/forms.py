@@ -1,6 +1,8 @@
 from django import forms
 from .models import ConditionsPercent, PurchasingAmount
 
+#forms.ModelForm - реферира към структурата на модела, когато формата има модел за по- кратко писане
+#Search формата няма модел и се приви с forms.Form
 
 class ConditionForm(forms.ModelForm):
     class Meta:
@@ -11,13 +13,11 @@ class ConditionForm(forms.ModelForm):
             "percent_condition",
         ]
 
-class PurchasingForm(forms.Form):
-    eik = forms.CharField(
-        max_length=13,
-        label="ЕИК на доставчик"
-    )
-    purchasing_amount = forms.DecimalField(
-        max_digits=15,
-        decimal_places=2,
-        label="Сума на покупка"
-    )
+
+class PurchasingForm(forms.ModelForm):
+    class Meta:
+        model = PurchasingAmount
+        fields = [
+            "eik",
+            "purchasing_amount",
+        ]

@@ -1,4 +1,5 @@
-from django.forms import DecimalField
+from http.client import HTTPResponse
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.db.models import Sum
 
@@ -6,7 +7,7 @@ from .forms import ConditionForm, PurchasingForm
 from .models import ConditionsPercent, PurchasingAmount
 
 
-def index(request):
+def index(request: HttpRequest) -> HTTPResponse:
     condition_form = ConditionForm()
     purchasing_form = PurchasingForm()
 
@@ -15,7 +16,7 @@ def index(request):
             condition_form = ConditionForm(request.POST)
             if condition_form.is_valid():
                 condition_form.save()
-                return redirect("index")
+                return redirect("bonuspercent:index")
 
         elif "add_purchase" in request.POST:
             purchasing_form = PurchasingForm(request.POST)
@@ -25,22 +26,21 @@ def index(request):
 
                 # запис по eik (БЕЗ condition)
                 PurchasingAmount.objects.create(
-                    eik=eik,
+                   eik=eik,
                     purchasing_amount=amount
                 )
-                return redirect("index")
+                return redirect("bonuspercent:index")
 
     return render(
         request,
-        "index.html",
+        "bonuspercent\index.html",
         {
             "condition_form": condition_form,
             "purchasing_form": purchasing_form,
         }
     )
 
-
-def bonus_report(request):
+def bonus_report(request: HttpRequest) -> HTTPResponse:
     # суми по доставчик
     purchases = (
         PurchasingAmount.objects
@@ -51,7 +51,11 @@ def bonus_report(request):
     # добавяне на процент и бонус (Python логика)
     report = []
     for p in purchases:
-        condition = ConditionsPercent.objects.get(eik=p["eik"])
+        condition = ConditionsPercent.objects.filter(eik=p["eik"]).first()
+
+        if not condition:
+            continue  # ако няма % бонус за този доставчик да не хвърля грешка, за да продължи. Като бизнес логика е ок
+
         bonus = p["total_amount"] * condition.percent_condition / 100
         report.append({
             "eik": p["eik"],
@@ -63,6 +67,6 @@ def bonus_report(request):
 
     return render(
         request,
-        "bonus_report.html",
+        "bonuspercent/bonus_report.html",
         {"report": report}
     )

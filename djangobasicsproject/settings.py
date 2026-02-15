@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
-
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -61,7 +63,7 @@ ROOT_URLCONF = 'djangobasicsproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'shared'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,6 +77,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djangobasicsproject.wsgi.application'
 
+load_dotenv()
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
@@ -82,11 +85,11 @@ WSGI_APPLICATION = 'djangobasicsproject.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "django_progect012026",
-        "USER": "postgres",
-        "PASSWORD": "PErahome001",
+        "NAME": os.getenv('DB_NAME'),
+        "USER": os.getenv('DB_USER'),
+        "PASSWORD": os.getenv('DB_PASS'),
         "HOST": "127.0.0.1",
-        "PORT": "5432",
+        "PORT": os.getenv('DB_PORT'),
     }
 }
 
