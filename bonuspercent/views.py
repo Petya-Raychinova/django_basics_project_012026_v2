@@ -36,7 +36,7 @@ def index(request: HttpRequest) -> HTTPResponse:
         "bonuspercent\index.html",
         {
             "condition_form": condition_form,
-            "purchasing_form": purchasing_form,
+            "purchasing_form": purchasing_form
         }
     )
 

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<a href="{% url 'nav' %}">← Обратно към главното меню</a>
+
+<h1>Въвеждане на отстъпка за промоционални продажби и отчет </h1>
+
+<a href="{% url 'bonuspromo:promo_report' %}">
+    Към бонус отчета
+</a>
+
+<hr>
+
+<h2>Добави продукт, покупна цена и % промо отстърпка</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ condition_promo_form.as_p }}
+    <button type="submit" name="add_promo_condition">Запис на промо продукт</button>
+</form>
+
+<hr>
+
+<h2>Добави продукт и продадено количество</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ sales_form.as_p }}
+    <button type="submit" name="add_sold_qty">Запис на продадено количество</button>
+</form>
+
+
+</body>
+</html>
