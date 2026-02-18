@@ -2,25 +2,83 @@
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Промоционални отстъпки</title>
+
+    <style>
+        body {
+            background-color: #dbeaf7;
+            font-family: Calibri, sans-serif;
+            margin: 40px;
+        }
+
+        h1 {
+            color: #003366;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #003366;
+            margin-top: 30px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #003366;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        hr {
+            border: 1px solid #9ec9ef;
+            margin: 25px 0;
+        }
+
+        form {
+            background-color: #c5ddf3;
+            padding: 20px;
+            width: 500px;
+            border-radius: 6px;
+        }
+
+        button {
+            background-color: #9ec9ef;
+            border: none;
+            padding: 8px 14px;
+            font-family: Calibri, sans-serif;
+            font-size: 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #003366;
+        }
+
+        button:hover {
+            background-color: #7fb6e6;
+        }
+    </style>
 </head>
+
 <body>
 
 <a href="{% url 'nav' %}">← Обратно към главното меню</a>
 
-<h1>Въвеждане на отстъпка за промоционални продажби и отчет </h1>
+<h1>Въвеждане на отстъпка за промоционални продажби и отчет</h1>
 
 <a href="{% url 'bonuspromo:promo_report' %}">
-    Към бонус отчета
+    Към отчета за проционални отстъпки
 </a>
 
 <hr>
 
-<h2>Добави продукт, покупна цена и % промо отстърпка</h2>
+<h2>Добави продукт, покупна цена и % промо отстъпка</h2>
 <form method="post">
     {% csrf_token %}
     {{ condition_promo_form.as_p }}
-    <button type="submit" name="add_promo_condition">Запис на промо продукт</button>
+    <button type="submit" name="add_promo_condition">
+        Запис на промо продукт
+    </button>
 </form>
 
 <hr>
@@ -29,9 +87,10 @@
 <form method="post">
     {% csrf_token %}
     {{ sales_form.as_p }}
-    <button type="submit" name="add_sold_qty">Запис на продадено количество</button>
+    <button type="submit" name="add_sold_qty">
+        Запис на продадено количество
+    </button>
 </form>
-
 
 </body>
 </html>

@@ -1,28 +1,72 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title>Промо отчет</title>
+
+    <style>
+        body {
+            background-color: #dbeaf7;
+            font-family: Calibri, sans-serif;
+            margin: 40px;
+        }
+
+        h1 {
+            color: #003366;
+            margin-bottom: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #003366;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: #ffffff;
+            margin-top: 20px;
+        }
+
+        thead {
+            background-color: #9ec9ef;
+            color: #003366;
+        }
+
+        th {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #7fb6e6;
+        }
+
+        td {
+            padding: 8px;
+            border: 1px solid #c5ddf3;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #eef6fd;
+        }
+
+        tbody tr:hover {
+            background-color: #d6e9fa;
+        }
+    </style>
+</head>
+
+<body>
+
+<a href="{% url 'nav' %}">← Обратно към главното меню</a>
+
+<h1>Промоционален отчет</h1>
+
 <table>
     <thead>
         <tr>
             <th>Продукт</th>
-            <th>Име на рподукт</th>
-            <th>Покупна цена</th>
-            <th>Процент промо отстъпка</th>
-            <th>Общо продадено количество</th>
-            <th>Промо бонус</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for row in report %}
-        <tr>
-            <td>{{ row.product_id }}</td>
-            <td>{{ row.product_name }}</td>
-            <td>{{ row.purchasing_price }} %</td>
-            <td>{{ row.percent_discount }}</td>
-            <td>{{ row.total_qty }}</td>
-            <td>{{ row.promo_bonus }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="5">Няма данни</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+            <th>И

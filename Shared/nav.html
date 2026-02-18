@@ -2,6 +2,43 @@
 <html>
 <head>
     <title>Menu</title>
+
+    <style>
+        body {
+            background-color: #dbeaf7;   /* светло син SAP стил */
+            font-family: Calibri, sans-serif;
+            margin: 40px;
+        }
+
+        h2 {
+            color: #003366;   /* тъмно синьо като SAP */
+            font-weight: bold;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 15px 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #003366;
+            font-size: 18px;
+            padding: 8px 12px;
+            background-color: #c5ddf3;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        a:hover {
+            background-color: #9ec9ef;
+        }
+    </style>
+
 </head>
 <body>
 
@@ -10,10 +47,8 @@
 <ul>
     <li><a href="{% url 'bonuspercent:index' %}">Въвеждане на покупни бонуси</a></li>
     <li><a href="{% url 'bonuspromo:index' %}">Въвеждане на отстъпка за промоционални продажби и отчет</a></li>
+    <li><a href="{% url 'import_purchasing_amount:index' %}">Импорт на файл (.xlsx) покупка по EIK</a></li>
 </ul>
 
 </body>
 </html>
-
-
-

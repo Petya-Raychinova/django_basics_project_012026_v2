@@ -36,7 +36,7 @@ ALLOWED_HOSTS = []
 PROJECT_APPS = [
     'bonuspromo',
     'bonuspercent',
-    'bonusfix',
+    'import_purchasing_amount',
 ]
 
 INSTALLED_APPS = [

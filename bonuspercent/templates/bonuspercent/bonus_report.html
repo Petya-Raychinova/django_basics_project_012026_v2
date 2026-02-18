@@ -1,3 +1,41 @@
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        background-color: #ffffff;
+        font-family: Calibri, sans-serif;
+        margin-top: 20px;
+    }
+
+    thead {
+        background-color: #9ec9ef;
+        color: #003366;
+    }
+
+    th {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #7fb6e6;
+    }
+
+    td {
+        padding: 8px;
+        border: 1px solid #c5ddf3;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #eef6fd;
+    }
+
+    tbody tr:hover {
+        background-color: #d6e9fa;
+    }
+
+    .number {
+        text-align: right;
+    }
+</style>
+
 <table>
     <thead>
         <tr>
@@ -13,9 +51,9 @@
         <tr>
             <td>{{ row.eik }}</td>
             <td>{{ row.supplier_name }}</td>
-            <td>{{ row.percent_condition }} %</td>
-            <td>{{ row.total_amount }}</td>
-            <td>{{ row.bonus }}</td>
+            <td class="number">{{ row.percent_condition }} %</td>
+            <td class="number">{{ row.total_amount }}</td>
+            <td class="number">{{ row.bonus }}</td>
         </tr>
         {% empty %}
         <tr>

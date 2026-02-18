@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="bg">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Покупни бонуси</title>
+    <title>Импорт на Excel файл</title>
 
     <style>
         body {
@@ -11,14 +10,9 @@
             margin: 40px;
         }
 
-        h1 {
-            color: #003366;
-            margin-bottom: 20px;
-        }
-
         h2 {
             color: #003366;
-            margin-top: 30px;
+            margin-bottom: 20px;
         }
 
         a {
@@ -31,16 +25,15 @@
             text-decoration: underline;
         }
 
-        hr {
-            border: 1px solid #9ec9ef;
-            margin: 25px 0;
-        }
-
         form {
             background-color: #c5ddf3;
             padding: 20px;
-            width: 500px;
+            width: 400px;
             border-radius: 6px;
+        }
+
+        input[type="file"] {
+            margin: 10px 0;
         }
 
         button {
@@ -58,34 +51,18 @@
             background-color: #7fb6e6;
         }
     </style>
-</head>
 
+</head>
 <body>
 
 <a href="{% url 'nav' %}">← Обратно към главното меню</a>
 
-<h1>Въвеждане на % покупни бонуси и отчет</h1>
+<h2>Импорт на Excel файл</h2>
 
-<a href="{% url 'bonuspercent:bonus_report' %}">
-    Към бонус отчета
-</a>
-
-<hr>
-
-<h2>Добави доставчик и % бонус</h2>
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ condition_form.as_p }}
-    <button type="submit" name="add_condition">Запис на доставчик</button>
-</form>
-
-<hr>
-
-<h2>Добави покупка по покупни цени без ДДС</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ purchasing_form.as_p }}
-    <button type="submit" name="add_purchase">Запис на покупка</button>
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
 </form>
 
 </body>

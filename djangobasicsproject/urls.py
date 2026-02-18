@@ -7,5 +7,5 @@ urlpatterns = [
     path("", nav, name="nav"), #стартова страница, от която ще се навигира
     path('bonuspercent/', include('bonuspercent.urls')),
     path('bonuspromo/', include('bonuspromo.urls')),
-    path('bonusfix/', include('bonusfix.urls')),
+    path("import/", include("import_purchasing_amount.urls")),
 ]
