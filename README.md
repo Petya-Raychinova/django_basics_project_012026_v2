@@ -1,6 +1,15 @@
 Python 3.12
 PostgreSQL 14 or higher (tested with PostgreSQL 17)
 
+# Django Bonus Project
+
+## Setup
+
+1. Create virtual environment
+2. pip install -r requirements.txt
+3. python manage.py migrate
+4. python manage.py runserver
+
 Note: The .env file is not included in the repository for security reasons.
 
 Data Model Structure
