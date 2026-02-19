@@ -13,6 +13,7 @@ class ConditionPromoForm(forms.ModelForm):
         ]
 
 class SalesForm(forms.ModelForm):
+
     class Meta:
         model = SalesQTY
         fields = [

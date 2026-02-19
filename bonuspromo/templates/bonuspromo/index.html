@@ -21,6 +21,14 @@
             margin-top: 30px;
         }
 
+        /* --- TOP NAVIGATION --- */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
         a {
             text-decoration: none;
             color: #003366;
@@ -62,13 +70,19 @@
 
 <body>
 
-<a href="{% url 'nav' %}">← Обратно към главното меню</a>
+<div class="top-nav">
+    <a href="{% url 'nav' %}">← Обратно към главното меню</a>
 
-<h1>Въвеждане на отстъпка за промоционални продажби и отчет</h1>
+    <a href="{% url 'bonuspromo:promo_report' %}">
+        Към отчета за промоционални отстъпки →
+    </a>
 
-<a href="{% url 'bonuspromo:promo_report' %}">
-    Към отчета за проционални отстъпки
+    <a href="{% url 'bonuspromo:promo_list' %}">
+    Към списък промо условия →
 </a>
+</div>
+
+<h1>Въвеждане, редакция на отстъпка за промоционални продажби и отчет</h1>
 
 <hr>
 

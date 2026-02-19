@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import ConditionsPercent
-from .models import PurchasingAmount
+from .models import ConditionsPercent, PurchasingAmount, ProductCategory
 
 @admin.register(ConditionsPercent)
 class ConditionAdmin(admin.ModelAdmin):
@@ -15,3 +14,9 @@ class PurchasingAdmin(admin.ModelAdmin):
         return obj.condition.eik
 
     get_eik.short_description = 'eik'
+
+@admin.register(ProductCategory)
+class ProductCategoryAdmin(admin.ModelAdmin):
+    list_display = ('product_category_name',)
+
+

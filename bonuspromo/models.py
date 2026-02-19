@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models import ForeignKey
+
 
 # таблица с продукти на промоция. Не може да се повтаря един и същи продукт
 class PromoConditionsPercent(models.Model):
@@ -23,13 +25,13 @@ class PromoConditionsPercent(models.Model):
     )
 
     def __str__(self):
-        return f"{self.product_id} ({self.purchasing_price})"
+        return f"{self.product_id} | {self.product_name} | {self.percent_discount}%"
 
 # Един продукт може да има няколко реда с продажби
 class SalesQTY(models.Model):
-    product_id = models.CharField(
-        max_length = 9,
-        verbose_name = "ID на продукт"
+    product_id = models.ForeignKey(
+        PromoConditionsPercent,
+        on_delete=models.CASCADE
     )
     sold_qty = models.DecimalField(
         max_digits=10,

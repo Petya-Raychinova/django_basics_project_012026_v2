@@ -1,0 +1,55 @@
+<style>
+    table {
+        border-collapse: collapse;
+        width: 50%;
+        background-color: #ffffff;
+        font-family: Calibri, sans-serif;
+        margin-top: 10px;
+    }
+
+    thead {
+        background-color: #9ec9ef;
+        color: #003366;
+    }
+
+    th {
+        padding: 6px;
+        text-align: left;
+        border: 1px solid #7fb6e6;
+    }
+
+    td {
+        padding: 2px;
+        border: 1px solid #c5ddf3;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #eef6fd;
+    }
+
+    tbody tr:hover {
+        background-color: #d6e9fa;
+    }
+
+    .number {
+        text-align: right;
+    }
+</style>
+
+<a href="{% url 'bonuspercent:index' %}">← Обратно към % бонус меню</a>
+
+<h1>Списък категории и доставчици</h1>
+
+<table border="1">
+    <tr>
+        <th>Категория</th>
+        <th>Доставчик</th>
+    </tr>
+
+    {% for row in report_data %}
+    <tr>
+        <td>{{ row.category }}</td>
+        <td>{{ row.supplier }}</td>
+    </tr>
+    {% endfor %}
+</table>

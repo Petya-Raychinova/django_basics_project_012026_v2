@@ -2,7 +2,7 @@
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
-    <title>Покупни бонуси</title>
+    <title>% Покупни бонуси</title>
 
     <style>
         body {
@@ -13,22 +13,28 @@
 
         h1 {
             color: #003366;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
-        h2 {
-            color: #003366;
-            margin-top: 30px;
+        /* 🔹 Навигация горе вдясно */
+        .top-links {
+            display: flex;
+            justify-content: flex-end;
+            gap: 25px;
+            margin-bottom: 40px;
         }
 
-        a {
+        .top-links a {
             text-decoration: none;
             color: #003366;
             font-weight: bold;
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
         }
 
-        a:hover {
-            text-decoration: underline;
+        .top-links a:hover {
+            background-color: #c5ddf3;
         }
 
         hr {
@@ -41,6 +47,7 @@
             padding: 20px;
             width: 500px;
             border-radius: 6px;
+            margin-bottom: 30px;
         }
 
         button {
@@ -60,27 +67,20 @@
     </style>
 </head>
 
+<a href="{% url 'nav' %}">← Обратно към главното меню</a>
 <body>
 
-<a href="{% url 'nav' %}">← Обратно към главното меню</a>
+    <!-- 🔹 Горна навигация -->
+    <div class="top-links">
+        <a href="{% url 'bonuspercent:bonus_report' %}">Бонус отчет</a>
+        <a href="{% url 'bonuspercent:supplier_list_sorted' %}">Кондиции доставчици</a>
+        <a href="{% url 'bonuspercent:purchase_list_sorted' %}">Покупки</a>
+        <a href="{% url 'bonuspercent:report_by_category' %}">Списък категории и доставчици</a>
+    </div>
 
+    <h1>Въвеждане, редакция на % покупни бонуси и отчет</h1>
 
-<h1>Въвеждане, редакция на % покупни бонуси и отчет</h1>
-
-<a href="{% url 'bonuspercent:bonus_report' %}"> Отвори бонус отчета</a>
-
-
-<hr>
-
-<a href="{% url 'bonuspercent:supplier_list_sorted' %}"> Отвори списък с кондиции на доставчици</a>
-
-
-<hr>
-
-<a href="{% url 'bonuspercent:purchase_list_sorted' %}"> Отвори списък с покупки на доставчици</a>
-
-
-<hr>
+    <hr>
 
 
 <h2>Добави доставчик и % бонус</h2>

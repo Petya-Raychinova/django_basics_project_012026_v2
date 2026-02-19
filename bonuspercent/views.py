@@ -1,10 +1,10 @@
 from http.client import HTTPResponse
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
-from django.db.models import Sum
+from django.db.models import Sum, ExpressionWrapper, DecimalField, F
 
 from .forms import ConditionForm, PurchasingForm
-from .models import ConditionsPercent, PurchasingAmount
+from .models import ConditionsPercent, PurchasingAmount, ProductCategory
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from .models import ConditionsPercent
@@ -164,3 +164,23 @@ def purchase_delete(request, pk):
         "bonuspercent/purchase_confirm_delete.html",
         {"purchase": purchase}
     )
+
+
+def report_by_category(request):
+    suppliers = ConditionsPercent.objects.prefetch_related("categories")
+
+    report_data = []
+
+    for supplier in suppliers:
+        for category in supplier.categories.all():
+            report_data.append({
+                "category": category.product_category_name,
+                "supplier": supplier.supplier_name,
+            })
+
+    return render(
+        request,
+        "bonuspercent/report_by_category.html",
+        {"report_data": report_data}
+    )
+

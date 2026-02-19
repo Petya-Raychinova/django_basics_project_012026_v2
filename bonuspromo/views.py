@@ -1,6 +1,6 @@
 from http.client import HTTPResponse
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Sum
 from django.shortcuts import render
 
@@ -40,33 +40,74 @@ def index (request: HttpRequest) -> HTTPResponse:
         }
     )
 
-def promo_report(request: HttpRequest) -> HTTPResponse:
-    qtys = (
-        SalesQTY.objects
-        .values("product_id")
-        .annotate(total_qty = Sum("sold_qty"))
+def promo_report(request: HttpRequest) -> HttpResponse:
+
+    products = (
+        PromoConditionsPercent.objects
+        .annotate(total_qty=Sum("salesqty__sold_qty"))
     )
 
     report_qty = []
-    for q in qtys:
-        condition_promo = PromoConditionsPercent.objects.filter(product_id=q["product_id"]).first()
 
-        if not condition_promo:
-            continue
+    for p in products:
+        total_qty = p.total_qty or 0
 
-        promo_bonus = q["total_qty"] * condition_promo.percent_discount/100
+        promo_bonus = (
+            total_qty *
+            p.purchasing_price *
+            p.percent_discount / 100
+        )
+
         report_qty.append({
-            "product_id": q["product_id"],
-            "product_name": condition_promo.product_name,
-            "purchasing_price": condition_promo.purchasing_price,
-            "percent_discount": condition_promo.percent_discount,
-            "total_qty": q["total_qty"],
+            "product_id": p.product_id,
+            "product_name": p.product_name,
+            "purchasing_price": p.purchasing_price,
+            "percent_discount": p.percent_discount,
+            "total_qty": total_qty,
             "promo_bonus": promo_bonus,
-        }
-       )
+        })
 
     return render(
         request,
         "bonuspromo/bonus_promo_report.html",
         {"report_qty": report_qty}
+    )
+
+def promo_conditions_list_sorted(request):
+    promos = PromoConditionsPercent.objects.all()
+
+    return render(
+        request,
+        "bonuspromo/promo_conditions_list_sorted.html",
+        {"promos": promos}
+    )
+
+def promo_conditions_edit(request, pk):
+    promo = get_object_or_404(PromoConditionsPercent, pk=pk)
+
+    if request.method == "POST":
+        form = ConditionPromoForm(request.POST, instance=promo)
+        if form.is_valid():
+            form.save()
+            return redirect("bonuspromo:promo_conditions_list_sorted")
+    else:
+        form = ConditionPromoForm(instance=promo)
+
+    return render(
+        request,
+        "bonuspromo/promo_conditions_edit.html",
+        {"form": form}
+    )
+
+def promo_conditions_delete(request, pk):
+    promo = get_object_or_404(PromoConditionsPercent, pk=pk)
+
+    if request.method == "POST":
+        promo.delete()
+        return redirect("bonuspromo:promo_conditions_list_sorted")
+
+    return render(
+        request,
+        "bonuspromo/promo_conditions_delete.html",
+        {"promo": promo}
     )

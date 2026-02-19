@@ -1,0 +1,67 @@
+<style>
+    table {
+        border-collapse: collapse;
+        width: 50%;
+        background-color: #ffffff;
+        font-family: Calibri, sans-serif;
+        margin-top: 10px;
+    }
+
+    thead {
+        background-color: #9ec9ef;
+        color: #003366;
+    }
+
+    th {
+        padding: 6px;
+        text-align: left;
+        border: 1px solid #7fb6e6;
+    }
+
+    td {
+        padding: 2px;
+        border: 1px solid #c5ddf3;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #eef6fd;
+    }
+
+    tbody tr:hover {
+        background-color: #d6e9fa;
+    }
+
+    .number {
+        text-align: right;
+    }
+</style>
+
+
+<body>
+
+<a href="{% url 'bonuspromo:index' %}">← Обратно към промо менюто</a>
+
+<table border="1" cellpadding="6">
+    <tr>
+        <th>ID</th>
+        <th>Продукт</th>
+        <th>% Отстъпка</th>
+        <th>Действия</th>
+    </tr>
+
+    {% for promo in promos %}
+    <tr>
+        <td>{{ promo.product_id }}</td>
+        <td>{{ promo.product_name }}</td>
+        <td>{{ promo.percent_discount }}%</td>
+        <td>
+            <a href="{% url 'bonuspromo:promo_conditions_edit' promo.pk %}">✏ Редакция</a>
+            |
+            <a href="{% url 'bonuspromo:promo_conditions_delete' promo.pk %}">🗑 Изтриване</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

@@ -1,8 +1,13 @@
 from django.db import models
 
+class ProductCategory(models.Model):
+    product_category_name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.product_category_name
+
 # таблица с доставчици; Един доставчик може да има само едно условие
 class ConditionsPercent(models.Model):
-    on_delete = models.CASCADE
     eik = models.CharField(
         max_length = 13,
         unique = True,
@@ -17,6 +22,7 @@ class ConditionsPercent(models.Model):
         decimal_places=2,
         verbose_name="Процент бонус"
     )
+    categories = models.ManyToManyField(ProductCategory, blank=True) #не е задължително във формата True; many-to-many relationship
 
     def __str__(self):
         return f"{self.supplier_name} ({self.percent_condition})"
@@ -37,6 +43,7 @@ class PurchasingAmount(models.Model):
 
     def __str__(self):
         return f"{self.condition_eik.eik} - {self.purchasing_amount}"
+
 
 
 

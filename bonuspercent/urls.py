@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import index, bonus_report, supplier_list_sorted, supplier_edit, supplier_delete, purchase_list_sorted, purchase_edit, purchase_delete
+from .views import index, bonus_report, supplier_list_sorted, supplier_edit, supplier_delete, purchase_list_sorted, \
+    purchase_edit, purchase_delete, report_by_category
 
 app_name = "bonuspercent"
 
@@ -12,4 +13,6 @@ urlpatterns = [
     path("purchases/", purchase_list_sorted, name="purchase_list_sorted"), # списък с покупки за проверка на редакция
     path("purchases/edit/<int:pk>/", purchase_edit, name="purchase_edit"),
     path("purchases/delete/<int:pk>/", purchase_delete, name="purchase_delete"),
+    path("report/category/", report_by_category, name="report_by_category"),
+
 ]

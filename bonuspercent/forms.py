@@ -1,7 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from .models import ConditionsPercent, PurchasingAmount
+from .models import ConditionsPercent, PurchasingAmount, ProductCategory
+
 
 #forms.ModelForm - реферира към структурата на модела, когато формата има модел за по- кратко писане
 #Search формата няма модел и се приви с forms.Form
@@ -9,11 +10,7 @@ from .models import ConditionsPercent, PurchasingAmount
 class ConditionForm(forms.ModelForm):
     class Meta:
         model = ConditionsPercent
-        fields = [
-            "eik",
-            "supplier_name",
-            "percent_condition",
-        ]
+        fields = "__all__"
 
     def clean_eik(self):
         eik = self.cleaned_data["eik"]
@@ -39,3 +36,16 @@ class PurchasingForm(forms.ModelForm):
             "condition_eik",
             "purchasing_amount",
         ]
+
+
+class ConditionForm(forms.ModelForm):
+
+    categories = forms.ModelMultipleChoiceField(
+        queryset=ProductCategory.objects.all(),
+        required=False,
+        widget=forms.CheckboxSelectMultiple
+    )
+
+    class Meta:
+        model = ConditionsPercent
+        fields = "__all__"

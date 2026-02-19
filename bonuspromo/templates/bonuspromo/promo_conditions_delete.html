@@ -1,0 +1,53 @@
+<style>
+    table {
+        border-collapse: collapse;
+        width: 50%;
+        background-color: #ffffff;
+        font-family: Calibri, sans-serif;
+        margin-top: 10px;
+    }
+
+    thead {
+        background-color: #9ec9ef;
+        color: #003366;
+    }
+
+    th {
+        padding: 6px;
+        text-align: left;
+        border: 1px solid #7fb6e6;
+    }
+
+    td {
+        padding: 2px;
+        border: 1px solid #c5ddf3;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #eef6fd;
+    }
+
+    tbody tr:hover {
+        background-color: #d6e9fa;
+    }
+
+    .number {
+        text-align: right;
+    }
+</style>
+
+
+<body>
+
+<a href="{% url 'bonuspromo:index' %}">← Обратно към промо менюто</a>
+
+<h2>Сигурни ли сте?</h2>
+
+<p>Ще изтриете: {{ promo.product_name }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Да, изтрий</button>
+</form>
+
+<a href="{% url 'bonuspromo:promo_conditions_list_sorted' %}">Отказ</a>
