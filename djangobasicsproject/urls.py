@@ -8,4 +8,5 @@ urlpatterns = [
     path('bonuspercent/', include('bonuspercent.urls')),
     path('bonuspromo/', include('bonuspromo.urls')),
     path("import/", include("import_purchasing_amount.urls")),
+
 ]

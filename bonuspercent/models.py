@@ -2,6 +2,7 @@ from django.db import models
 
 # таблица с доставчици; Един доставчик може да има само едно условие
 class ConditionsPercent(models.Model):
+    on_delete = models.CASCADE
     eik = models.CharField(
         max_length = 13,
         unique = True,
@@ -22,16 +23,22 @@ class ConditionsPercent(models.Model):
 
 # Един доставчик може да има няколко реда с покупки
 class PurchasingAmount(models.Model):
-    eik = models.CharField(
-        max_length = 13,
-        verbose_name = "ЕИК на доставчик"
+    condition_eik = models.ForeignKey(
+        ConditionsPercent,
+        on_delete=models.CASCADE,
+        related_name="ttlpurchases",
+        null=False,
+        blank=False
     )
     purchasing_amount = models.DecimalField(
         max_digits=15,
-        decimal_places=2,
-        verbose_name="Стойност покупка"
+        decimal_places=2
     )
 
     def __str__(self):
-        return f"{self.eik} ({self.purchasing_amount})"
+        return f"{self.condition_eik.eik} - {self.purchasing_amount}"
+
+
+
+
 

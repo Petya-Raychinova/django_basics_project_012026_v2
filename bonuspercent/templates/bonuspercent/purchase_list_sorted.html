@@ -1,0 +1,85 @@
+<style>
+    table {
+        border-collapse: collapse;
+        width: 50%;
+        background-color: #ffffff;
+        font-family: Calibri, sans-serif;
+        margin-top: 10px;
+    }
+
+    thead {
+        background-color: #9ec9ef;
+        color: #003366;
+    }
+
+    th {
+        padding: 6px;
+        text-align: left;
+        border: 1px solid #7fb6e6;
+    }
+
+    td {
+        padding: 2px;
+        border: 1px solid #c5ddf3;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #eef6fd;
+    }
+
+    tbody tr:hover {
+        background-color: #d6e9fa;
+    }
+
+    .number {
+        text-align: right;
+    }
+</style>
+
+
+<body>
+
+<a href="{% url 'bonuspercent:index' %}">← Обратно към % бонус меню</a>
+
+<h1>Списък с данни за покупки</h1>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>ID</th>
+        <th>ЕИК</th>
+        <th>Полупка без ДДС</th>
+        <th>Редакция</th>
+        <th>Изтриване</th>
+
+    </tr>
+
+    {% for purchase in purchases %}
+    <tr>
+        <td>{{ purchase.id }}</td>
+        <td>{{ purchase.condition_eik }}</td>
+        <td>{{ purchase.purchasing_amount }}</td>
+        <td>
+        <a href="{% url 'bonuspercent:purchase_edit' purchase.id %}">
+        Редактирай
+
+        <a href="{% url 'bonuspercent:purchase_delete' purchase.pk %}">
+        Изтрий
+</a>
+
+    </a>
+</td>
+
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">Няма въведени покупки.</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+<br>
+
+
+</body>
+</html>

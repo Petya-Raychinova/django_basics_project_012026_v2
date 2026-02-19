@@ -64,20 +64,40 @@
 
 <a href="{% url 'nav' %}">← Обратно към главното меню</a>
 
-<h1>Въвеждане на % покупни бонуси и отчет</h1>
 
-<a href="{% url 'bonuspercent:bonus_report' %}">
-    Към бонус отчета
-</a>
+<h1>Въвеждане, редакция на % покупни бонуси и отчет</h1>
+
+<a href="{% url 'bonuspercent:bonus_report' %}"> Отвори бонус отчета</a>
+
 
 <hr>
 
+<a href="{% url 'bonuspercent:supplier_list_sorted' %}"> Отвори списък с кондиции на доставчици</a>
+
+
+<hr>
+
+<a href="{% url 'bonuspercent:purchase_list_sorted' %}"> Отвори списък с покупки на доставчици</a>
+
+
+<hr>
+
+
 <h2>Добави доставчик и % бонус</h2>
+
 <form method="post">
     {% csrf_token %}
     {{ condition_form.as_p }}
     <button type="submit" name="add_condition">Запис на доставчик</button>
 </form>
+
+{% for message in messages %}
+    {% if "supplier" in message.tags %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endif %}
+{% endfor %}
 
 <hr>
 
@@ -87,6 +107,16 @@
     {{ purchasing_form.as_p }}
     <button type="submit" name="add_purchase">Запис на покупка</button>
 </form>
+
+
+{% for message in messages %}
+    {% if "purchase" in message.tags %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endif %}
+{% endfor %}
+
 
 </body>
 </html>

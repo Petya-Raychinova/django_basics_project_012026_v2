@@ -1,0 +1,87 @@
+<style>
+    table {
+        border-collapse: collapse;
+        width: 50%;
+        background-color: #ffffff;
+        font-family: Calibri, sans-serif;
+        margin-top: 10px;
+    }
+
+    thead {
+        background-color: #9ec9ef;
+        color: #003366;
+    }
+
+    th {
+        padding: 6px;
+        text-align: left;
+        border: 1px solid #7fb6e6;
+    }
+
+    td {
+        padding: 2px;
+        border: 1px solid #c5ddf3;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #eef6fd;
+    }
+
+    tbody tr:hover {
+        background-color: #d6e9fa;
+    }
+
+    .number {
+        text-align: right;
+    }
+</style>
+
+
+<body>
+
+<a href="{% url 'bonuspercent:index' %}">← Обратно към % бонус меню</a>
+
+<h1>Списък с доставчици</h1>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>ID</th>
+        <th>ЕИК</th>
+        <th>Име на доставчик</th>
+        <th>% бонус</th>
+        <th>Редакция</th>
+        <th>Изтриване</th>
+
+    </tr>
+
+    {% for supplier in suppliers %}
+    <tr>
+        <td>{{ supplier.id }}</td>
+        <td>{{ supplier.eik }}</td>
+        <td>{{ supplier.supplier_name }}</td>
+        <td>{{ supplier.percent_condition }} %</td>
+        <td>
+        <a href="{% url 'bonuspercent:supplier_edit' supplier.id %}">
+            Редактирай
+        </a>
+    </td>
+    <td>
+        <a href="{% url 'bonuspercent:supplier_delete' supplier.id %}">
+            Изтрий
+        </a>
+    </td>
+
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">Няма въведени доставчици.</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+<br>
+
+
+</body>
+</html>

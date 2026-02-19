@@ -1,10 +1,10 @@
 <style>
     table {
         border-collapse: collapse;
-        width: 100%;
+        width: 50%;
         background-color: #ffffff;
         font-family: Calibri, sans-serif;
-        margin-top: 20px;
+        margin-top: 10px;
     }
 
     thead {
@@ -13,13 +13,13 @@
     }
 
     th {
-        padding: 10px;
+        padding: 6px;
         text-align: left;
         border: 1px solid #7fb6e6;
     }
 
     td {
-        padding: 8px;
+        padding: 2px;
         border: 1px solid #c5ddf3;
     }
 
@@ -46,7 +46,11 @@
             <th>Бонус</th>
         </tr>
     </thead>
+
     <tbody>
+
+    <a href="{% url 'bonuspercent:index' %}">← Обратно към % бонус меню</a>
+
         {% for row in report %}
         <tr>
             <td>{{ row.eik }}</td>

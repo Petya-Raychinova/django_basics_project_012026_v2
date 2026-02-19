@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="bg">
 <head>
-    <title>Импорт на Excel файл</title>
+    <meta charset="UTF-8">
+    <title>Потвърди изтриване</title>
 
     <style>
         body {
@@ -10,9 +11,14 @@
             margin: 40px;
         }
 
-        h2 {
+        h1 {
             color: #003366;
             margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #003366;
+            margin-top: 30px;
         }
 
         a {
@@ -25,15 +31,16 @@
             text-decoration: underline;
         }
 
+        hr {
+            border: 1px solid #9ec9ef;
+            margin: 25px 0;
+        }
+
         form {
             background-color: #c5ddf3;
             padding: 20px;
-            width: 400px;
+            width: 500px;
             border-radius: 6px;
-        }
-
-        input[type="file"] {
-            margin: 10px 0;
         }
 
         button {
@@ -51,27 +58,28 @@
             background-color: #7fb6e6;
         }
     </style>
-
 </head>
+
 <body>
 
-{% if messages %}
-    {% for message in messages %}
-        <div class="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endif %}
+<h2>Сигурни ли сте, че искате да изтриете този доставчик?</h2>
 
-<a href="{% url 'nav' %}">← Обратно към главното меню</a>
+<p>
+    <strong>ЕИК:</strong> {{ supplier.eik }} <br>
+    <strong>Име:</strong> {{ supplier.supplier_name }} <br>
+    <strong>% бонус:</strong> {{ supplier.percent_condition }}
+</p>
 
-<h2>Импорт на Excel файл</h2>
-
-<form method="post" enctype="multipart/form-data">
+<form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Upload</button>
+    <button type="submit">Да, изтрий</button>
 </form>
+
+<br>
+
+<a href="{% url 'bonuspercent:supplier_list_sorted' %}">
+    Отказ
+</a>
 
 </body>
 </html>

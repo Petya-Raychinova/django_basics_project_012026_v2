@@ -10,6 +10,8 @@ from bonuspercent.models import ConditionsPercent, PurchasingAmount
 def index(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         form = UploadPurchasingAmount(request.POST, request.FILES)
+        imported_rows_count = 0
+        skipped_rows_count = 0
 
         if form.is_valid():
             excel_file = form.cleaned_data["upload_file"]
@@ -19,23 +21,33 @@ def index(request: HttpRequest) -> HttpResponse:
             imported_rows = 0
 
             for row in sheet.iter_rows(min_row=2, values_only=True):
-                eik = str(row[0]).strip()
+                eik = str(row[0]).strip() if row[0] else ""
                 purchasing_amount = row[1]
 
-                try:
-
-
-                    PurchasingAmount.objects.create(
-                        eik=eik,
-                        purchasing_amount=purchasing_amount
-                    )
-
-                    imported_rows += 1
-
-                except ConditionsPercent.DoesNotExist:
+                # ако няма стойности в реда
+                if not eik or not purchasing_amount:
+                    skipped_rows_count += 1
                     continue
 
-            messages.success(request, f"Импортирани успешно {imported_rows} редове.")
+                condition = ConditionsPercent.objects.filter(eik=eik).first()
+
+                if not condition:
+                    skipped_rows_count += 1
+                    continue
+
+                PurchasingAmount.objects.create(
+                    condition_eik=condition,
+                    purchasing_amount=purchasing_amount
+                )
+
+                imported_rows_count += 1
+
+            messages.success(request, "Импорт завършен.", extra_tags="import")
+            messages.success(
+                request,
+                f"Импортирани в базата: {imported_rows_count} брой реда | Пропуснати: {skipped_rows_count} брой реда поради несъществуващ ЕИК като кондиция. Въведи първо % бонус!"
+            )
+
             return redirect("import_purchasing_amount:index")
 
     else:
