@@ -14,7 +14,7 @@ class PromoConditionsPercent(models.Model):
         verbose_name="Име на продукт"
     )
     purchasing_price = models.DecimalField(
-        max_digits=4,
+        max_digits=6,
         decimal_places=2,
         verbose_name="Покупна цена за изчисление на отстъпката"
     )
@@ -34,7 +34,7 @@ class SalesQTY(models.Model):
         on_delete=models.CASCADE
     )
     sold_qty = models.DecimalField(
-        max_digits=10,
+        max_digits=12,
         decimal_places=2,
         verbose_name="Количество продажби"
     )

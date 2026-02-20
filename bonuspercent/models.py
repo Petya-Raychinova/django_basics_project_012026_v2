@@ -37,7 +37,7 @@ class PurchasingAmount(models.Model):
         blank=False
     )
     purchasing_amount = models.DecimalField(
-        max_digits=15,
+        max_digits=17,
         decimal_places=2
     )
 
