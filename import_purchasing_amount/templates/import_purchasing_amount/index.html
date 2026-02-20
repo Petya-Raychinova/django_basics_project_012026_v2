@@ -6,6 +6,14 @@
 
 {% block header %}
 Импорт на Excel файл
+
+<div style="font-size:14px; margin-top:10px;">
+    <strong>Изисквания към файла:</strong><br>
+    Име на файл: <b>"upload_file.xlsx"</b><br>
+    Колона A: <b>"eik"</b> – от 10 до 13 цифри<br>
+    Колона B: <b>"purchasing_amount"</b> – до 15 цифри
+</div>
+
 {% endblock %}
 
 {% block navigation %}
@@ -16,12 +24,12 @@
 <div class="form-box" style="max-width:450px;">
 
     {% if messages %}
-    {% for message in messages %}
-        <div class="message">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endif %}
+        {% for message in messages %}
+            <div class="message">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
 
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}

@@ -1,45 +1,57 @@
-from http.client import HTTPResponse
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Sum
-from django.shortcuts import render
+from django.contrib import messages
 
 from .forms import ConditionPromoForm, SalesForm
 from .models import PromoConditionsPercent, SalesQTY
 
-def index (request: HttpRequest) -> HTTPResponse:
+def index(request: HttpRequest) -> HttpResponse:
     condition_promo_form = ConditionPromoForm()
     sales_form = SalesForm()
 
     if request.method == "POST":
+
+        # добавя условие
         if "add_promo_condition" in request.POST:
             condition_promo_form = ConditionPromoForm(request.POST)
+
             if condition_promo_form.is_valid():
-                condition_promo_form.save()
+                promo = condition_promo_form.save()
+
+                messages.success(
+                    request,
+                    f"Промо продуктът е добавен успешно. ID: {promo.id}",
+                    extra_tags="promo"
+                )
+
                 return redirect("bonuspromo:index")
 
+        # добавяме продажба
         elif "add_sold_qty" in request.POST:
-            sales_form =SalesForm(request.POST)
-            if sales_form.is_valid():
-                product_id = sales_form.cleaned_data["product_id"]
-                qty = sales_form.cleaned_data["sold_qty"]
+            sales_form = SalesForm(request.POST)
 
-                SalesQTY.objects.create(
-                    product_id=product_id,
-                    sold_qty = qty
+            if sales_form.is_valid():
+                sale = sales_form.save()
+
+                messages.success(
+                    request,
+                    f"Продажбата е добавена успешно. ID: {sale.id}",
+                    extra_tags="sales"
                 )
 
                 return redirect("bonuspromo:index")
 
     return render(
         request,
-        "bonuspromo\index.html",
+        "bonuspromo/index.html",
         {
             "condition_promo_form": condition_promo_form,
             "sales_form": sales_form
         }
     )
 
+#отчет за промоциите
 def promo_report(request: HttpRequest) -> HttpResponse:
 
     products = (
@@ -73,8 +85,9 @@ def promo_report(request: HttpRequest) -> HttpResponse:
         {"report_qty": report_qty}
     )
 
+
 def promo_conditions_list_sorted(request):
-    promos = PromoConditionsPercent.objects.all()
+    promos = PromoConditionsPercent.objects.all().order_by("product_id")
 
     return render(
         request,
@@ -82,40 +95,53 @@ def promo_conditions_list_sorted(request):
         {"promos": promos}
     )
 
+
 def promo_conditions_edit(request, pk):
     promo = get_object_or_404(PromoConditionsPercent, pk=pk)
 
     if request.method == "POST":
         form = ConditionPromoForm(request.POST, instance=promo)
+
         if form.is_valid():
             form.save()
-            return redirect("bonuspromo:promo_conditions_list_sorted")
+
+            messages.success(
+                request,
+                f"Промо условието (ID: {promo.id}) е редактирано успешно.",
+                extra_tags="promo"
+            )
+
+            return redirect("bonuspromo:promo_list")
+
     else:
         form = ConditionPromoForm(instance=promo)
 
     return render(
         request,
         "bonuspromo/promo_conditions_edit.html",
-        {"form": form}
+        {"form": form, "promo": promo}
     )
+
 
 def promo_conditions_delete(request, pk):
     promo = get_object_or_404(PromoConditionsPercent, pk=pk)
 
     if request.method == "POST":
         promo.delete()
-        return redirect("bonuspromo:promo_conditions_list_sorted")
+
+        messages.success(
+            request,
+            f"Промо условието (ID: {pk}) беше изтрито успешно.",
+            extra_tags="promo"
+        )
+
+        return redirect("bonuspromo:promo_list")
 
     return render(
         request,
         "bonuspromo/promo_conditions_delete.html",
         {"promo": promo}
     )
-
-
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import SalesQTY
-from .forms import SalesForm
 
 
 
@@ -138,16 +164,25 @@ def sales_qty_edit(request, pk):
 
     if request.method == "POST":
         form = SalesForm(request.POST, instance=sale)
+
         if form.is_valid():
             form.save()
+
+            messages.success(
+                request,
+                f"Продажбата (ID: {sale.id}) е редактирана успешно.",
+                extra_tags="sales"
+            )
+
             return redirect("bonuspromo:sales_list")
+
     else:
         form = SalesForm(instance=sale)
 
     return render(
         request,
         "bonuspromo/sales_qty_edit.html",
-        {"form": form}
+        {"form": form, "sale": sale}
     )
 
 
@@ -156,6 +191,13 @@ def sales_qty_delete(request, pk):
 
     if request.method == "POST":
         sale.delete()
+
+        messages.success(
+            request,
+            f"Продажбата (ID: {pk}) беше изтрита успешно.",
+            extra_tags="sales"
+        )
+
         return redirect("bonuspromo:sales_list")
 
     return render(

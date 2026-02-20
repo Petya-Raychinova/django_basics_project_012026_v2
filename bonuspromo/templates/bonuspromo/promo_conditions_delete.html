@@ -1,53 +1,39 @@
-<style>
-    table {
-        border-collapse: collapse;
-        width: 50%;
-        background-color: #ffffff;
-        font-family: Calibri, sans-serif;
-        margin-top: 10px;
-    }
+{% extends "base.html" %}
 
-    thead {
-        background-color: #9ec9ef;
-        color: #003366;
-    }
+{% block title %}
+Изтриване на промо условие
+{% endblock %}
 
-    th {
-        padding: 6px;
-        text-align: left;
-        border: 1px solid #7fb6e6;
-    }
+{% block navigation %}
+    <a href="{% url 'bonuspromo:index' %}"><- Промо меню</a>
+    <a href="{% url 'bonuspromo:promo_list' %}">Списък промо условия</a>
+{% endblock %}
 
-    td {
-        padding: 2px;
-        border: 1px solid #c5ddf3;
-    }
+{% block header %}
+Потвърждение за изтриване
+{% endblock %}
 
-    tbody tr:nth-child(even) {
-        background-color: #eef6fd;
-    }
+{% block content %}
 
-    tbody tr:hover {
-        background-color: #d6e9fa;
-    }
+<div class="form-box">
 
-    .number {
-        text-align: right;
-    }
-</style>
+    <p>
+        Сигурни ли сте, че искате да изтриете:
+    </p>
 
+    <p>
+        <strong>{{ promo.product_name }}</strong>
+    </p>
 
-<body>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Да, изтрий</button>
+    </form>
 
-<a href="{% url 'bonuspromo:index' %}">← Обратно към промо менюто</a>
+</div>
 
-<h2>Сигурни ли сте?</h2>
+<br>
 
-<p>Ще изтриете: {{ promo.product_name }}</p>
+<a href="{% url 'bonuspromo:promo_list' %}">← Отказ</a>
 
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Да, изтрий</button>
-</form>
-
-<a href="{% url 'bonuspromo:promo_conditions_list_sorted' %}">Отказ</a>
+{% endblock %}

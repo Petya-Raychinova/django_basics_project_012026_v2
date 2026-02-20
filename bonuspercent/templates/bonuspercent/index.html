@@ -29,13 +29,16 @@
     </form>
 </div>
 
-{% for message in messages %}
-    {% if "supplier" in message.tags %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
+<div id="message-container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message">
+                {{ message }}
+            </div>
+        {% endfor %}
     {% endif %}
-{% endfor %}
+</div>
+
 
 <hr>
 
@@ -51,12 +54,15 @@
     </form>
 </div>
 
-{% for message in messages %}
-    {% if "purchase" in message.tags %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
+<div id="message-container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message">
+                {{ message }}
+            </div>
+        {% endfor %}
     {% endif %}
-{% endfor %}
+</div>
+
 
 {% endblock %}

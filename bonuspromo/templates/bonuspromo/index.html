@@ -1,5 +1,7 @@
 
 {% extends "base.html" %}
+{% load custom_filters %}
+
 
 {% block title %}
 Промоционални отстъпки
@@ -29,6 +31,16 @@
     </form>
 </div>
 
+<div id="message-container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
 <hr>
 
 <h2>Добави продукт и продадено количество</h2>
@@ -41,6 +53,16 @@
             Запис на продадено количество
         </button>
     </form>
+</div>
+
+<div id="message-container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
 
 {% endblock %}

@@ -18,7 +18,7 @@ class ConditionsPercent(models.Model):
         verbose_name="Име на доставчик"
     )
     percent_condition = models.DecimalField(
-        max_digits=10,
+        max_digits=5,
         decimal_places=2,
         verbose_name="Процент бонус"
     )

@@ -14,12 +14,12 @@ class PromoConditionsPercent(models.Model):
         verbose_name="Име на продукт"
     )
     purchasing_price = models.DecimalField(
-        max_digits=10,
+        max_digits=4,
         decimal_places=2,
         verbose_name="Покупна цена за изчисление на отстъпката"
     )
     percent_discount = models.DecimalField(
-        max_digits=10,
+        max_digits=5,
         decimal_places=2,
         verbose_name="Процент отстъпка за промоционалните продажби"
     )
