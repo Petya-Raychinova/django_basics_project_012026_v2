@@ -1,85 +1,75 @@
-<style>
-    table {
-        border-collapse: collapse;
-        width: 50%;
-        background-color: #ffffff;
-        font-family: Calibri, sans-serif;
-        margin-top: 10px;
-    }
+{% extends "base.html" %}
 
-    thead {
-        background-color: #9ec9ef;
-        color: #003366;
-    }
+{% block title %}
+Списък покупки
+{% endblock %}
 
-    th {
-        padding: 6px;
-        text-align: left;
-        border: 1px solid #7fb6e6;
-    }
+{% block navigation %}
+    <a href="{% url 'bonuspercent:index' %}"><- % Бонус меню</a>
+    <a href="{% url 'bonuspercent:bonus_report' %}">Бонус отчет</a>
+{% endblock %}
 
-    td {
-        padding: 2px;
-        border: 1px solid #c5ddf3;
-    }
+{% block header %}
+Списък с данни за покупки
+{% endblock %}
 
-    tbody tr:nth-child(even) {
-        background-color: #eef6fd;
-    }
+{% block content %}
 
-    tbody tr:hover {
-        background-color: #d6e9fa;
-    }
-
-    .number {
-        text-align: right;
-    }
-</style>
-
-
-<body>
-
-<a href="{% url 'bonuspercent:index' %}">← Обратно към % бонус меню</a>
-
-<h1>Списък с данни за покупки</h1>
-
-<table border="1" cellpadding="8">
-    <tr>
-        <th>ID</th>
-        <th>ЕИК</th>
-        <th>Полупка без ДДС</th>
-        <th>Редакция</th>
-        <th>Изтриване</th>
-
-    </tr>
-
-    {% for purchase in purchases %}
-    <tr>
-        <td>{{ purchase.id }}</td>
-        <td>{{ purchase.condition_eik }}</td>
-        <td>{{ purchase.purchasing_amount }}</td>
-        <td>
-        <a href="{% url 'bonuspercent:purchase_edit' purchase.id %}">
-        Редактирай
-
-        <a href="{% url 'bonuspercent:purchase_delete' purchase.pk %}">
-        Изтрий
-</a>
-
-    </a>
-</td>
-
-    </tr>
-    {% empty %}
-    <tr>
-        <td colspan="4">Няма въведени покупки.</td>
-    </tr>
+{% if messages %}
+    {% for message in messages %}
+        <div class="message">
+            {{ message }}
+        </div>
     {% endfor %}
+{% endif %}
 
-</table>
+<div class="table-container">
 
-<br>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ЕИК</th>
+                <th>Покупка без ДДС</th>
+                <th>Редакция</th>
+                <th>Изтриване</th>
+            </tr>
+        </thead>
 
+        <tbody>
+        {% for purchase in purchases %}
+            <tr>
+                <td>{{ purchase.id }}</td>
+                <td>{{ purchase.condition_eik }}</td>
+                <td style="text-align:right;">
+                    {{ purchase.purchasing_amount|floatformat:2 }}
+                </td>
 
-</body>
-</html>
+                <td>
+                    <a class="action-link"
+                       href="{% url 'bonuspercent:purchase_edit' purchase.id %}">
+                        ✏ Редакция
+                    </a>
+                </td>
+
+                <td>
+                    <a class="action-link"
+                       href="{% url 'bonuspercent:purchase_delete' purchase.pk %}">
+                        🗑 Изтриване
+                    </a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5" style="text-align:center; padding:20px;">
+                    Няма въведени покупки.
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

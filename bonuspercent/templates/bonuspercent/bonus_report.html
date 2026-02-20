@@ -1,68 +1,58 @@
-<style>
-    table {
-        border-collapse: collapse;
-        width: 50%;
-        background-color: #ffffff;
-        font-family: Calibri, sans-serif;
-        margin-top: 10px;
-    }
+{% extends "base.html" %}
 
-    thead {
-        background-color: #9ec9ef;
-        color: #003366;
-    }
+{% block title %}
+Бонус отчет
+{% endblock %}
 
-    th {
-        padding: 6px;
-        text-align: left;
-        border: 1px solid #7fb6e6;
-    }
+{% block navigation %}
+    <a href="{% url 'bonuspercent:index' %}"><- % Бонус меню</a>
+{% endblock %}
 
-    td {
-        padding: 2px;
-        border: 1px solid #c5ddf3;
-    }
+{% block header %}
+Отчет по покупни бонуси
+{% endblock %}
 
-    tbody tr:nth-child(even) {
-        background-color: #eef6fd;
-    }
+{% block content %}
 
-    tbody tr:hover {
-        background-color: #d6e9fa;
-    }
+<div class="table-container">
 
-    .number {
-        text-align: right;
-    }
-</style>
+    <table>
+        <thead>
+            <tr>
+                <th>ЕИК</th>
+                <th>Доставчик</th>
+                <th>Процент бонус</th>
+                <th>Обща сума покупки</th>
+                <th>Бонус</th>
+            </tr>
+        </thead>
 
-<table>
-    <thead>
-        <tr>
-            <th>ЕИК</th>
-            <th>Доставчик</th>
-            <th>Процент бонус</th>
-            <th>Обща сума покупки</th>
-            <th>Бонус</th>
-        </tr>
-    </thead>
-
-    <tbody>
-
-    <a href="{% url 'bonuspercent:index' %}">← Обратно към % бонус меню</a>
-
+        <tbody>
         {% for row in report %}
-        <tr>
-            <td>{{ row.eik }}</td>
-            <td>{{ row.supplier_name }}</td>
-            <td class="number">{{ row.percent_condition }} %</td>
-            <td class="number">{{ row.total_amount }}</td>
-            <td class="number">{{ row.bonus }}</td>
-        </tr>
+            <tr>
+                <td>{{ row.eik }}</td>
+                <td>{{ row.supplier_name }}</td>
+                <td style="text-align:right;">
+                    {{ row.percent_condition|floatformat:2 }} %
+                </td>
+                <td style="text-align:right;">
+                    {{ row.total_amount|floatformat:2 }}
+                </td>
+                <td style="text-align:right;">
+                    {{ row.bonus|floatformat:2 }}
+                </td>
+            </tr>
         {% empty %}
-        <tr>
-            <td colspan="5">Няма данни</td>
-        </tr>
+            <tr>
+                <td colspan="5" style="text-align:center; padding:20px;">
+                    Няма данни
+                </td>
+            </tr>
         {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

@@ -1,110 +1,46 @@
-<!DOCTYPE html>
-<html lang="bg">
-<head>
-    <meta charset="UTF-8">
-    <title>Промоционални отстъпки</title>
 
-    <style>
-        body {
-            background-color: #dbeaf7;
-            font-family: Calibri, sans-serif;
-            margin: 40px;
-        }
+{% extends "base.html" %}
 
-        h1 {
-            color: #003366;
-            margin-bottom: 20px;
-        }
+{% block title %}
+Промоционални отстъпки
+{% endblock %}
 
-        h2 {
-            color: #003366;
-            margin-top: 30px;
-        }
+{% block navigation %}
+    <a href="{% url 'bonuspromo:promo_report' %}">Към отчета</a>
+    <a href="{% url 'bonuspromo:promo_list' %}">Списък  и редакция на промо условия</a>
+    <a href="{% url 'bonuspromo:sales_list' %}">Списък и редакция на продадени количества</a>
+{% endblock %}
 
-        /* --- TOP NAVIGATION --- */
-        .top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+{% block header %}
+Въвеждане, редакция на отстъпка за промоционални продажби и отчет
+{% endblock %}
 
-        a {
-            text-decoration: none;
-            color: #003366;
-            font-weight: bold;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        hr {
-            border: 1px solid #9ec9ef;
-            margin: 25px 0;
-        }
-
-        form {
-            background-color: #c5ddf3;
-            padding: 20px;
-            width: 500px;
-            border-radius: 6px;
-        }
-
-        button {
-            background-color: #9ec9ef;
-            border: none;
-            padding: 8px 14px;
-            font-family: Calibri, sans-serif;
-            font-size: 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            color: #003366;
-        }
-
-        button:hover {
-            background-color: #7fb6e6;
-        }
-    </style>
-</head>
-
-<body>
-
-<div class="top-nav">
-    <a href="{% url 'nav' %}">← Обратно към главното меню</a>
-
-    <a href="{% url 'bonuspromo:promo_report' %}">
-        Към отчета за промоционални отстъпки →
-    </a>
-
-    <a href="{% url 'bonuspromo:promo_list' %}">
-    Към списък промо условия →
-</a>
-</div>
-
-<h1>Въвеждане, редакция на отстъпка за промоционални продажби и отчет</h1>
-
-<hr>
+{% block content %}
 
 <h2>Добави продукт, покупна цена и % промо отстъпка</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ condition_promo_form.as_p }}
-    <button type="submit" name="add_promo_condition">
-        Запис на промо продукт
-    </button>
-</form>
+
+<div class="form-box">
+    <form method="post">
+        {% csrf_token %}
+        {{ condition_promo_form.as_p }}
+        <button type="submit" name="add_promo_condition">
+            Запис на промо продукт
+        </button>
+    </form>
+</div>
 
 <hr>
 
 <h2>Добави продукт и продадено количество</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ sales_form.as_p }}
-    <button type="submit" name="add_sold_qty">
-        Запис на продадено количество
-    </button>
-</form>
 
-</body>
-</html>
+<div class="form-box">
+    <form method="post">
+        {% csrf_token %}
+        {{ sales_form.as_p }}
+        <button type="submit" name="add_sold_qty">
+            Запис на продадено количество
+        </button>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,95 +1,33 @@
-<!DOCTYPE html>
-<html lang="bg">
-<head>
-    <meta charset="UTF-8">
-    <title>% Покупни бонуси</title>
+{% extends "base.html" %}
 
-    <style>
-        body {
-            background-color: #dbeaf7;
-            font-family: Calibri, sans-serif;
-            margin: 40px;
-        }
+{% block title %}
+% Покупни бонуси
+{% endblock %}
 
-        h1 {
-            color: #003366;
-            margin-bottom: 30px;
-        }
+{% block navigation %}
+    <a href="{% url 'bonuspercent:bonus_report' %}">Бонус отчет</a>
+    <a href="{% url 'bonuspercent:supplier_list_sorted' %}">Списък и редакция на кондиции на доставчици</a>
+    <a href="{% url 'bonuspercent:purchase_list_sorted' %}">Списък  и редакция на покупки</a>
+    <a href="{% url 'bonuspercent:report_by_category' %}">Списък категории и доставчици</a>
+{% endblock %}
 
-        /* 🔹 Навигация горе вдясно */
-        .top-links {
-            display: flex;
-            justify-content: flex-end;
-            gap: 25px;
-            margin-bottom: 40px;
-        }
+{% block header %}
+Въвеждане, редакция на % покупни бонуси и отчет
+{% endblock %}
 
-        .top-links a {
-            text-decoration: none;
-            color: #003366;
-            font-weight: bold;
-            padding: 6px 10px;
-            border-radius: 6px;
-            transition: background-color 0.2s ease;
-        }
-
-        .top-links a:hover {
-            background-color: #c5ddf3;
-        }
-
-        hr {
-            border: 1px solid #9ec9ef;
-            margin: 25px 0;
-        }
-
-        form {
-            background-color: #c5ddf3;
-            padding: 20px;
-            width: 500px;
-            border-radius: 6px;
-            margin-bottom: 30px;
-        }
-
-        button {
-            background-color: #9ec9ef;
-            border: none;
-            padding: 8px 14px;
-            font-family: Calibri, sans-serif;
-            font-size: 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            color: #003366;
-        }
-
-        button:hover {
-            background-color: #7fb6e6;
-        }
-    </style>
-</head>
-
-<a href="{% url 'nav' %}">← Обратно към главното меню</a>
-<body>
-
-    <!-- 🔹 Горна навигация -->
-    <div class="top-links">
-        <a href="{% url 'bonuspercent:bonus_report' %}">Бонус отчет</a>
-        <a href="{% url 'bonuspercent:supplier_list_sorted' %}">Кондиции доставчици</a>
-        <a href="{% url 'bonuspercent:purchase_list_sorted' %}">Покупки</a>
-        <a href="{% url 'bonuspercent:report_by_category' %}">Списък категории и доставчици</a>
-    </div>
-
-    <h1>Въвеждане, редакция на % покупни бонуси и отчет</h1>
-
-    <hr>
-
+{% block content %}
 
 <h2>Добави доставчик и % бонус</h2>
 
-<form method="post">
-    {% csrf_token %}
-    {{ condition_form.as_p }}
-    <button type="submit" name="add_condition">Запис на доставчик</button>
-</form>
+<div class="form-box">
+    <form method="post">
+        {% csrf_token %}
+        {{ condition_form.as_p }}
+        <button type="submit" name="add_condition">
+            Запис на доставчик
+        </button>
+    </form>
+</div>
 
 {% for message in messages %}
     {% if "supplier" in message.tags %}
@@ -102,12 +40,16 @@
 <hr>
 
 <h2>Добави покупка по покупни цени без ДДС</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ purchasing_form.as_p }}
-    <button type="submit" name="add_purchase">Запис на покупка</button>
-</form>
 
+<div class="form-box">
+    <form method="post">
+        {% csrf_token %}
+        {{ purchasing_form.as_p }}
+        <button type="submit" name="add_purchase">
+            Запис на покупка
+        </button>
+    </form>
+</div>
 
 {% for message in messages %}
     {% if "purchase" in message.tags %}
@@ -117,6 +59,4 @@
     {% endif %}
 {% endfor %}
 
-
-</body>
-</html>
+{% endblock %}

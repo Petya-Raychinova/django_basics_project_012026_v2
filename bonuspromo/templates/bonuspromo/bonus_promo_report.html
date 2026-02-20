@@ -1,97 +1,54 @@
-<!DOCTYPE html>
-<html lang="bg">
-<head>
-    <meta charset="UTF-8">
-    <title>Промо отчет</title>
+{% extends "base.html" %}
 
-    <style>
-        body {
-            background-color: #dbeaf7;
-            font-family: Calibri, sans-serif;
-            margin: 40px;
-        }
+{% block title %}
+Промо отчет
+{% endblock %}
 
-        h1 {
-            color: #003366;
-            margin-bottom: 20px;
-        }
+{% block navigation %}
+    <a href="{% url 'bonuspromo:index' %}"><-Промо меню</a>
+    <a href="{% url 'bonuspromo:sales_list' %}">Списък продажби</a>
+{% endblock %}
 
-        a {
-            text-decoration: none;
-            color: #003366;
-            font-weight: bold;
-        }
+{% block header %}
+Промоционален отчет
+{% endblock %}
 
-        a:hover {
-            text-decoration: underline;
-        }
+{% block content %}
 
-        table {
-            border-collapse: collapse;
-            background-color: #ffffff;
-            margin-top: 20px;
-        }
+<div class="table-container">
 
-        thead {
-            background-color: #9ec9ef;
-            color: #003366;
-        }
+    <table>
+        <thead>
+            <tr>
+                <th>ID на продукт</th>
+                <th>Име на продукт</th>
+                <th>Покупна цена</th>
+                <th>% Отстъпка</th>
+                <th>Общо продадено количество</th>
+                <th>Обща промо отстъпка</th>
+            </tr>
+        </thead>
 
-        th {
-            padding: 4px;
-            text-align: left;
-            border: 1px solid #7fb6e6;
-        }
+        <tbody>
+            {% for row in report_qty %}
+            <tr>
+                <td>{{ row.product_id }}</td>
+                <td>{{ row.product_name }}</td>
+                <td>{{ row.purchasing_price|floatformat:2 }}</td>
+                <td>{{ row.percent_discount|floatformat:2 }}%</td>
+                <td>{{ row.total_qty|default:0 }}</td>
+                <td>{{ row.promo_bonus|floatformat:2 }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="text-align:center; padding:20px;">
+                    Няма налични данни
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-        td {
-            padding: 2px;
-            border: 1px solid #c5ddf3;
-        }
+</div>
 
-        tbody tr:nth-child(even) {
-            background-color: #eef6fd;
-        }
-
-        tbody tr:hover {
-            background-color: #d6e9fa;
-        }
-    </style>
-</head>
-
-<body>
-
-<a href="{% url 'bonuspromo:index' %}">← Обратно към промо менюто</a>
-
-<h1>Промоционален отчет</h1>
-
-<table>
-    <thead>
-        <tr>
-            <th>ID на продукт</th>
-            <th>Име на продукт</th>
-            <th>Покупна цена</th>
-            <th>% Отстъпка</th>
-            <th>Общо продадено количество</th>
-            <th>Обща промо отстъпка</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        {% for row in report_qty %}
-        <tr>
-            <td>{{ row.product_id }}</td>
-            <td>{{ row.product_name }}</td>
-            <td>{{ row.purchasing_price|floatformat:2 }}</td>
-            <td>{{ row.percent_discount|floatformat:2 }}%</td>
-            <td>{{ row.total_qty|default:0 }}</td>
-            <td>{{ row.promo_bonus|floatformat:2 }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="6" style="text-align:center; padding:20px;">
-                Няма налични данни
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% endblock %}

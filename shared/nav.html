@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+Menu
+{% endblock %}
+
+{% block back_link %}{% endblock %}
+
+{% block header %}
+Меню
+{% endblock %}
+
+{% block navigation %}
+{% endblock %}
+
+{% block content %}
+
+<ul style="list-style-type:none; padding:0; max-width:600px; margin-top:30px;">
+
+    <li style="margin-bottom:25px;">
+        <a class="menu-link" href="{% url 'bonuspercent:index' %}">
+            Въвеждане, редакция на % покупни бонуси и отчет
+        </a>
+    </li>
+
+        <li style="margin-bottom:25px;">
+        <a class="menu-link" href="{% url 'import_purchasing_amount:index' %}">
+            Импорт на файл (.xlsx) покупка по EIK
+        </a>
+    </li>
+
+    </p>
+
+    <hr class="menu-separator">
+
+    <p>
+
+    <li style="margin-bottom:25px;">
+        <a class="menu-link" href="{% url 'bonuspromo:index' %}">
+            Въвеждане, редакция на отстъпка за промоционални продажби и отчет
+        </a>
+    </li>
+
+</ul>
+
+{% endblock %}

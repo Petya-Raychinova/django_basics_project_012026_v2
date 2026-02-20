@@ -1,87 +1,77 @@
-<style>
-    table {
-        border-collapse: collapse;
-        width: 50%;
-        background-color: #ffffff;
-        font-family: Calibri, sans-serif;
-        margin-top: 10px;
-    }
+{% extends "base.html" %}
 
-    thead {
-        background-color: #9ec9ef;
-        color: #003366;
-    }
+{% block title %}
+Списък доставчици
+{% endblock %}
 
-    th {
-        padding: 6px;
-        text-align: left;
-        border: 1px solid #7fb6e6;
-    }
+{% block navigation %}
+    <a href="{% url 'bonuspercent:index' %}"><- % Бонус меню</a>
+    <a href="{% url 'bonuspercent:bonus_report' %}">Бонус отчет</a>
+{% endblock %}
 
-    td {
-        padding: 2px;
-        border: 1px solid #c5ddf3;
-    }
+{% block header %}
+Списък с доставчици
+{% endblock %}
 
-    tbody tr:nth-child(even) {
-        background-color: #eef6fd;
-    }
+{% block content %}
 
-    tbody tr:hover {
-        background-color: #d6e9fa;
-    }
-
-    .number {
-        text-align: right;
-    }
-</style>
-
-
-<body>
-
-<a href="{% url 'bonuspercent:index' %}">← Обратно към % бонус меню</a>
-
-<h1>Списък с доставчици</h1>
-
-<table border="1" cellpadding="8">
-    <tr>
-        <th>ID</th>
-        <th>ЕИК</th>
-        <th>Име на доставчик</th>
-        <th>% бонус</th>
-        <th>Редакция</th>
-        <th>Изтриване</th>
-
-    </tr>
-
-    {% for supplier in suppliers %}
-    <tr>
-        <td>{{ supplier.id }}</td>
-        <td>{{ supplier.eik }}</td>
-        <td>{{ supplier.supplier_name }}</td>
-        <td>{{ supplier.percent_condition }} %</td>
-        <td>
-        <a href="{% url 'bonuspercent:supplier_edit' supplier.id %}">
-            Редактирай
-        </a>
-    </td>
-    <td>
-        <a href="{% url 'bonuspercent:supplier_delete' supplier.id %}">
-            Изтрий
-        </a>
-    </td>
-
-    </tr>
-    {% empty %}
-    <tr>
-        <td colspan="4">Няма въведени доставчици.</td>
-    </tr>
+{% if messages %}
+    {% for message in messages %}
+        <div class="message">
+            {{ message }}
+        </div>
     {% endfor %}
+{% endif %}
 
-</table>
+<div class="table-container">
 
-<br>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ЕИК</th>
+                <th>Име на доставчик</th>
+                <th>% бонус</th>
+                <th>Редакция</th>
+                <th>Изтриване</th>
+            </tr>
+        </thead>
 
+        <tbody>
+        {% for supplier in suppliers %}
+            <tr>
+                <td>{{ supplier.id }}</td>
+                <td>{{ supplier.eik }}</td>
+                <td>{{ supplier.supplier_name }}</td>
+                <td style="text-align:right;">
+                    {{ supplier.percent_condition|floatformat:2 }} %
+                </td>
 
-</body>
-</html>
+                <td>
+                    <a class="action-link"
+                       href="{% url 'bonuspercent:supplier_edit' supplier.id %}">
+                        ✏ Редакция
+                    </a>
+                </td>
+
+                <td>
+                    <a class="action-link"
+                       href="{% url 'bonuspercent:supplier_delete' supplier.id %}">
+                        🗑 Изтриване
+                    </a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6" style="text-align:center; padding:20px;">
+                    Няма въведени доставчици.
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

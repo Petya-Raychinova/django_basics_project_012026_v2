@@ -1,77 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Импорт на Excel файл</title>
+{% extends "base.html" %}
 
-    <style>
-        body {
-            background-color: #dbeaf7;
-            font-family: Calibri, sans-serif;
-            margin: 40px;
-        }
+{% block title %}
+Импорт на Excel файл
+{% endblock %}
 
-        h2 {
-            color: #003366;
-            margin-bottom: 20px;
-        }
+{% block header %}
+Импорт на Excel файл
+{% endblock %}
 
-        a {
-            text-decoration: none;
-            color: #003366;
-            font-weight: bold;
-        }
+{% block navigation %}
+{% endblock %}
 
-        a:hover {
-            text-decoration: underline;
-        }
+{% block content %}
 
-        form {
-            background-color: #c5ddf3;
-            padding: 20px;
-            width: 400px;
-            border-radius: 6px;
-        }
+<div class="form-box" style="max-width:450px;">
 
-        input[type="file"] {
-            margin: 10px 0;
-        }
-
-        button {
-            background-color: #9ec9ef;
-            border: none;
-            padding: 8px 14px;
-            font-family: Calibri, sans-serif;
-            font-size: 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            color: #003366;
-        }
-
-        button:hover {
-            background-color: #7fb6e6;
-        }
-    </style>
-
-</head>
-<body>
-
-{% if messages %}
+    {% if messages %}
     {% for message in messages %}
-        <div class="alert">
+        <div class="message">
             {{ message }}
         </div>
     {% endfor %}
 {% endif %}
 
-<a href="{% url 'nav' %}">← Обратно към главното меню</a>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">
+            Upload
+        </button>
+    </form>
 
-<h2>Импорт на Excel файл</h2>
+</div>
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Upload</button>
-</form>
-
-</body>
-</html>
+{% endblock %}

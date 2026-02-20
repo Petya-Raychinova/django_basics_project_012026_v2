@@ -1,85 +1,45 @@
-<!DOCTYPE html>
-<html lang="bg">
-<head>
-    <meta charset="UTF-8">
-    <title>Потвърди изтриване</title>
+{% extends "base.html" %}
 
-    <style>
-        body {
-            background-color: #dbeaf7;
-            font-family: Calibri, sans-serif;
-            margin: 40px;
-        }
+{% block title %}
+Потвърди изтриване
+{% endblock %}
 
-        h1 {
-            color: #003366;
-            margin-bottom: 20px;
-        }
+{% block navigation %}
+    <a href="{% url 'bonuspercent:index' %}"><- % Бонус меню</a>
+    <a href="{% url 'bonuspercent:supplier_list_sorted' %}">Списък доставчици</a>
+{% endblock %}
 
-        h2 {
-            color: #003366;
-            margin-top: 30px;
-        }
+{% block header %}
+Потвърждение за изтриване
+{% endblock %}
 
-        a {
-            text-decoration: none;
-            color: #003366;
-            font-weight: bold;
-        }
+{% block content %}
 
-        a:hover {
-            text-decoration: underline;
-        }
+<div class="form-box" style="max-width:550px;">
 
-        hr {
-            border: 1px solid #9ec9ef;
-            margin: 25px 0;
-        }
+    <p style="margin-bottom:15px;">
+        Сигурни ли сте, че искате да изтриете този доставчик?
+    </p>
 
-        form {
-            background-color: #c5ddf3;
-            padding: 20px;
-            width: 500px;
-            border-radius: 6px;
-        }
+    <p>
+        <strong>ЕИК:</strong> {{ supplier.eik }} <br>
+        <strong>Име:</strong> {{ supplier.supplier_name }} <br>
+        <strong>% бонус:</strong> {{ supplier.percent_condition|floatformat:2 }} %
+    </p>
 
-        button {
-            background-color: #9ec9ef;
-            border: none;
-            padding: 8px 14px;
-            font-family: Calibri, sans-serif;
-            font-size: 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            color: #003366;
-        }
+    <form method="post" style="margin-top:20px;">
+        {% csrf_token %}
 
-        button:hover {
-            background-color: #7fb6e6;
-        }
-    </style>
-</head>
+        <button type="submit">
+            Да, изтрий
+        </button>
 
-<body>
+        <a href="{% url 'bonuspercent:supplier_list_sorted' %}"
+           style="margin-left:20px;">
+            Отказ
+        </a>
+    </form>
 
-<h2>Сигурни ли сте, че искате да изтриете този доставчик?</h2>
+</div>
 
-<p>
-    <strong>ЕИК:</strong> {{ supplier.eik }} <br>
-    <strong>Име:</strong> {{ supplier.supplier_name }} <br>
-    <strong>% бонус:</strong> {{ supplier.percent_condition }}
-</p>
-
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Да, изтрий</button>
-</form>
-
-<br>
-
-<a href="{% url 'bonuspercent:supplier_list_sorted' %}">
-    Отказ
-</a>
-
-</body>
-</html>
+{% endblock %}

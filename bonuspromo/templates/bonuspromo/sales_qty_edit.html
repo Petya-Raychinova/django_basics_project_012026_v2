@@ -1,37 +1,35 @@
 {% extends "base.html" %}
 
 {% block title %}
-Редакция на промо условие
+Редакция на продажба
 {% endblock %}
 
 {% block navigation %}
     <a href="{% url 'bonuspromo:index' %}"><- Промо меню</a>
-    <a href="{% url 'bonuspromo:promo_report' %}">Към отчета</a>
+    <a href="{% url 'bonuspromo:sales_list' %}">Списък продажби</a>
 {% endblock %}
 
 {% block header %}
-Редакция на промо условие
+Редакция на продадено количество
 {% endblock %}
 
 {% block content %}
 
-<div class="form-box">
-
-    {% if messages %}
-        {% for message in messages %}
-            <div class="message">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
+<div class="form-box" style="max-width:600px;">
 
     <form method="post">
         {% csrf_token %}
+
         {{ form.as_p }}
 
         <button type="submit">
             Запази
         </button>
+
+        <a href="{% url 'bonuspromo:sales_list' %}"
+           style="margin-left:20px;">
+            Отказ
+        </a>
     </form>
 
 </div>

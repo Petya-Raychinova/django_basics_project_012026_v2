@@ -1,55 +1,47 @@
-<style>
-    table {
-        border-collapse: collapse;
-        width: 50%;
-        background-color: #ffffff;
-        font-family: Calibri, sans-serif;
-        margin-top: 10px;
-    }
+{% extends "base.html" %}
 
-    thead {
-        background-color: #9ec9ef;
-        color: #003366;
-    }
+{% block title %}
+Категории и доставчици
+{% endblock %}
 
-    th {
-        padding: 6px;
-        text-align: left;
-        border: 1px solid #7fb6e6;
-    }
+{% block navigation %}
+    <a href="{% url 'bonuspercent:index' %}"><- % Бонус меню</a>
+    <a href="{% url 'bonuspercent:bonus_report' %}">Бонус отчет</a>
+{% endblock %}
 
-    td {
-        padding: 2px;
-        border: 1px solid #c5ddf3;
-    }
+{% block header %}
+Списък категории и доставчици
+{% endblock %}
 
-    tbody tr:nth-child(even) {
-        background-color: #eef6fd;
-    }
+{% block content %}
 
-    tbody tr:hover {
-        background-color: #d6e9fa;
-    }
+<div class="table-container">
 
-    .number {
-        text-align: right;
-    }
-</style>
+    <table>
+        <thead>
+            <tr>
+                <th>Категория</th>
+                <th>Доставчик</th>
+            </tr>
+        </thead>
 
-<a href="{% url 'bonuspercent:index' %}">← Обратно към % бонус меню</a>
+        <tbody>
+        {% for row in report_data %}
+            <tr>
+                <td>{{ row.category }}</td>
+                <td>{{ row.supplier }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="2" style="text-align:center; padding:20px;">
+                    Няма налични данни
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
 
-<h1>Списък категории и доставчици</h1>
+    </table>
 
-<table border="1">
-    <tr>
-        <th>Категория</th>
-        <th>Доставчик</th>
-    </tr>
+</div>
 
-    {% for row in report_data %}
-    <tr>
-        <td>{{ row.category }}</td>
-        <td>{{ row.supplier }}</td>
-    </tr>
-    {% endfor %}
-</table>
+{% endblock %}

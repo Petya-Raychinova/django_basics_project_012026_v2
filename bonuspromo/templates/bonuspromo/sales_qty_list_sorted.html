@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
 {% block title %}
-Списък промо условия
+Списък продажби
 {% endblock %}
 
 {% block navigation %}
-    <a href="{% url 'bonuspromo:index' %}"><- Промо меню</a>
+    <a href="{% url 'bonuspromo:index' %}"><-Промо меню</a>
     <a href="{% url 'bonuspromo:promo_report' %}">Към отчета</a>
 {% endblock %}
 
 {% block header %}
-Списък промо условия
+Списък продадени количества
 {% endblock %}
 
 {% block content %}
@@ -28,42 +28,43 @@
     <table>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Продукт</th>
+                <th>Product ID</th>
+                <th>Име на продукт</th>
                 <th>% Отстъпка</th>
+                <th>Количество</th>
                 <th>Редакция</th>
                 <th>Изтриване</th>
             </tr>
         </thead>
 
         <tbody>
-        {% for promo in promos %}
+        {% for sale in sales %}
             <tr>
-                <td>{{ promo.product_id }}</td>
-                <td>{{ promo.product_name }}</td>
-                <td>{{ promo.percent_discount }}%</td>
+                <td>{{ sale.product_id.product_id }}</td>
+                <td>{{ sale.product_id.product_name }}</td>
+                <td>{{ sale.product_id.percent_discount }}%</td>
+                <td>{{ sale.sold_qty }}</td>
 
                 <td>
                     <a class="action-link"
-                       href="{% url 'bonuspromo:promo_conditions_edit' promo.pk %}">
+                       href="{% url 'bonuspromo:sales_qty_edit' sale.pk %}">
                         ✏ Редакция
                     </a>
                 </td>
 
                 <td>
                     <a class="action-link"
-                       href="{% url 'bonuspromo:promo_conditions_delete' promo.pk %}">
+                       href="{% url 'bonuspromo:sales_qty_delete' sale.pk %}">
                         🗑 Изтриване
                     </a>
                 </td>
             </tr>
         {% empty %}
             <tr>
-                <td colspan="5">Няма въведени промо условия.</td>
+                <td colspan="6">Няма въведени продажби.</td>
             </tr>
         {% endfor %}
         </tbody>
-
     </table>
 
 </div>

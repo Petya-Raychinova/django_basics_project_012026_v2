@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Django Project{% endblock %}</title>
+
+    <style>
+        body {
+            background-color: #dbeaf7;
+            font-family: Calibri, sans-serif;
+            margin: 0;
+            padding: 30px 60px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        /* ===== TOP NAVIGATION ===== */
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        /* ===== LINKS ===== */
+
+        a {
+            text-decoration: none;
+            color: #003366;
+            font-weight: bold;
+            padding: 6px 10px;
+            border-radius: 4px;
+            transition: all 0.25s ease;
+        }
+
+        a:hover {
+            background-color: #ffd9b3;   /* светло оранжево */
+            color: #003366;              /* запазваме син текст */
+        }
+
+
+        /* ===== HEADINGS ===== */
+
+        h1 {
+            color: #003366;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #003366;
+            margin-top: 35px;
+        }
+
+        hr {
+            border: 1px solid #9ec9ef;
+            margin: 25px 0;
+        }
+
+        /* ===== FORMS ===== */
+
+        .form-box {
+            background-color: #c5ddf3;
+            padding: 20px;
+            width: 550px;
+            border-radius: 6px;
+        }
+
+        /* ===== TABLE STYLE ===== */
+
+        .table-container {
+            margin-top: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        th {
+            background-color: #8fb2d4;
+            color: #003366;
+            padding: 6px 10px;
+            border: 1px solid #5f8fbf;
+            text-align: left;
+        }
+
+        td {
+            padding: 6px 10px;
+            border: 1px solid #9ec9ef;
+            background-color: #c5ddf3;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #d6e6f7;
+        }
+
+        .action-link {
+            font-weight: bold;
+        }
+
+        /* ===== BUTTONS ===== */
+
+        button {
+            background-color: #9ec9ef;
+            border: none;
+            padding: 8px 14px;
+            font-family: Calibri, sans-serif;
+            font-size: 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #003366;
+            transition: 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #7fb6e6;
+        }
+        .message {
+            margin-bottom: 12px;
+            padding: 10px 14px;
+            background-color: #fff3b0;   /* светло жълт фон */
+            color: #000;                 /* черен текст */
+            font-style: italic;          /* italic */
+            border-radius: 4px;
+        }
+
+
+        footer {
+            margin-top: 40px;
+            padding-top: 15px;
+            font-size: 14px;
+            color: #003366;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="top-nav">
+
+    {% block back_link %}
+        <a href="{% url 'nav' %}"><<<- Обратно към главното меню</a>
+    {% endblock %}
+
+    <div class="nav-links">
+        {% block navigation %}{% endblock %}
+    </div>
+
+</div>
+
+
+<div style="flex:1;">
+
+    <h1>{% block header %}{% endblock %}</h1>
+
+    <hr>
+
+    {% block content %}{% endblock %}
+
+</div>
+
+
+<hr>
+
+<footer>
+    Django Bonus Management System |
+    © 2026 |
+    Created by Petya Ray
+</footer>
+
+
+</body>
+</html>

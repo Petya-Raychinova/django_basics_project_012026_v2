@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block navigation %}
-    <a href="{% url 'bonuspercent:index' %}"><- % Бонус меню</a>
-    <a href="{% url 'bonuspercent:purchase_list_sorted' %}">Списък покупки</a>
+    <a href="{% url 'bonuspromo:index' %}"><- Промо меню</a>
+    <a href="{% url 'bonuspromo:sales_list' %}">Списък продажби</a>
 {% endblock %}
 
 {% block header %}
@@ -17,22 +17,24 @@
 
 <div class="form-box" style="max-width:550px;">
 
-    <p>
-        Сигурни ли сте, че искате да изтриете покупката на този доставчик?
+    <p style="margin-bottom:15px;">
+        Сигурни ли сте, че искате да изтриете продажбата?
     </p>
 
-    <p style="margin-top:15px;">
-        <strong>Доставчик:</strong> {{ purchase.condition.supplier_name }} <br>
-        <strong>Сума:</strong> {{ purchase.purchasing_amount|floatformat:2 }}
+    <p>
+        <strong>{{ sale.product_id.product_id }}</strong> –
+        {{ sale.product_id.product_name }}
+        ({{ sale.sold_qty|floatformat:2 }})
     </p>
 
     <form method="post" style="margin-top:20px;">
         {% csrf_token %}
+
         <button type="submit">
             Да, изтрий
         </button>
 
-        <a href="{% url 'bonuspercent:purchase_list_sorted' %}"
+        <a href="{% url 'bonuspromo:sales_list' %}"
            style="margin-left:20px;">
             Отказ
         </a>

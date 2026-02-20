@@ -111,3 +111,55 @@ def promo_conditions_delete(request, pk):
         "bonuspromo/promo_conditions_delete.html",
         {"promo": promo}
     )
+
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import SalesQTY
+from .forms import SalesForm
+
+
+
+def sales_qty_list_sorted(request):
+    sales = (
+        SalesQTY.objects
+        .select_related("product_id")
+        .order_by("product_id__product_id")
+    )
+
+    return render(
+        request,
+        "bonuspromo/sales_qty_list_sorted.html",
+        {"sales": sales}
+    )
+
+
+def sales_qty_edit(request, pk):
+    sale = get_object_or_404(SalesQTY, pk=pk)
+
+    if request.method == "POST":
+        form = SalesForm(request.POST, instance=sale)
+        if form.is_valid():
+            form.save()
+            return redirect("bonuspromo:sales_list")
+    else:
+        form = SalesForm(instance=sale)
+
+    return render(
+        request,
+        "bonuspromo/sales_qty_edit.html",
+        {"form": form}
+    )
+
+
+def sales_qty_delete(request, pk):
+    sale = get_object_or_404(SalesQTY, pk=pk)
+
+    if request.method == "POST":
+        sale.delete()
+        return redirect("bonuspromo:sales_list")
+
+    return render(
+        request,
+        "bonuspromo/sales_qty_delete.html",
+        {"sale": sale}
+    )
