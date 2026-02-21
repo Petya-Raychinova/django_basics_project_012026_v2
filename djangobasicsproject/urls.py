@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.shortcuts import render
 from django.urls import path, include
@@ -15,3 +17,6 @@ def custom_404(request, exception):
     return render(request, "404.html", status=404)
 
 handler404 = "djangobasicsproject.urls.custom_404"
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

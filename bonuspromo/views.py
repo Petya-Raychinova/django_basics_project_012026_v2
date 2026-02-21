@@ -144,7 +144,6 @@ def promo_conditions_delete(request, pk):
     )
 
 
-
 def sales_qty_list_sorted(request):
     sales = (
         SalesQTY.objects
