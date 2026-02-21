@@ -4,7 +4,7 @@
 ###Project Overview
 ---------------------------------
 This project is a Django-based web application for managing supplier bonus agreements and promotional discounts.
-The system allows management master data, sotring and controlling contract agrrements and reporting based on transactional data. 
+The system allows management of master data, sotring and controlling contract agreements and reporting based on transactional data. 
 Managing supplier bonus percentages
 Recording purchasing transactions regarding amounts
 Importing purchasing data from Excel files
