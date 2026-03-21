@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpRequest, HttpResponse
 import os
+
+from accounts.decorators import manager_required
 from .forms import ContractUploadForm, ContractDocument
 
 
@@ -30,6 +32,7 @@ def contract_list(request: HttpRequest) -> HttpResponse:
         {"contracts": contracts},
     )
 
+@manager_required
 def delete_contract(request, pk):
     contract = get_object_or_404(ContractDocument, pk=pk)
 
@@ -50,6 +53,7 @@ def delete_contract(request, pk):
 
     return redirect("contract_documents:list")
 
+@manager_required
 def edit_contract(request, pk):
     contract = get_object_or_404(ContractDocument, pk=pk)
 

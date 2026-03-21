@@ -34,7 +34,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # залагат се отделно, за да се разграничават когато са писани допълнително от зададените изначално
 PROJECT_APPS = [
-    'accounts',
+    'accounts.apps.AccountsConfig',
     'bonuspromo',
     'bonuspercent',
     'import_purchasing_amount',
@@ -138,3 +138,5 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 AUTH_USER_MODEL = "accounts.AppUser"
 
+LOGIN_REDIRECT_URL = 'nav'
+LOGOUT_REDIRECT_URL = 'nav'

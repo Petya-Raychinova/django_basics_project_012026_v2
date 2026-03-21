@@ -2,11 +2,11 @@ import openpyxl
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
-
+from accounts.decorators import manager_required
 from .forms import UploadPurchasingAmount
 from bonuspercent.models import ConditionsPercent, PurchasingAmount
 
-
+@manager_required
 def index(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         form = UploadPurchasingAmount(request.POST, request.FILES)

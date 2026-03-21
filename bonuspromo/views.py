@@ -2,9 +2,10 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Sum
 from django.contrib import messages
-
 from .forms import ConditionPromoForm, SalesForm
 from .models import PromoConditionsPercent, SalesQTY
+from accounts.decorators import manager_required
+
 
 def index(request: HttpRequest) -> HttpResponse:
     condition_promo_form = ConditionPromoForm()
@@ -95,7 +96,7 @@ def promo_conditions_list_sorted(request):
         {"promos": promos}
     )
 
-
+@manager_required
 def promo_conditions_edit(request, pk):
     promo = get_object_or_404(PromoConditionsPercent, pk=pk)
 
@@ -122,7 +123,7 @@ def promo_conditions_edit(request, pk):
         {"form": form, "promo": promo}
     )
 
-
+@manager_required
 def promo_conditions_delete(request, pk):
     promo = get_object_or_404(PromoConditionsPercent, pk=pk)
 
@@ -157,7 +158,7 @@ def sales_qty_list_sorted(request):
         {"sales": sales}
     )
 
-
+@manager_required
 def sales_qty_edit(request, pk):
     sale = get_object_or_404(SalesQTY, pk=pk)
 
@@ -184,7 +185,7 @@ def sales_qty_edit(request, pk):
         {"form": form, "sale": sale}
     )
 
-
+@manager_required
 def sales_qty_delete(request, pk):
     sale = get_object_or_404(SalesQTY, pk=pk)
 

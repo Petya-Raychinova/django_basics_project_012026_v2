@@ -1,3 +1,4 @@
+from functools import wraps
 from http.client import HTTPResponse
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
@@ -8,8 +9,9 @@ from .models import ConditionsPercent, PurchasingAmount, ProductCategory
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from .models import ConditionsPercent
+from accounts.decorators import manager_required
 
-
+@manager_required
 def index(request: HttpRequest) -> HTTPResponse:
     condition_form = ConditionForm()
     purchasing_form = PurchasingForm()
@@ -78,6 +80,7 @@ def supplier_list_sorted(request):
         {"suppliers": suppliers}
     )
 
+@manager_required
 def supplier_edit(request, pk):
     supplier = get_object_or_404(ConditionsPercent, pk=pk)
 
@@ -101,7 +104,7 @@ def supplier_edit(request, pk):
         {"form": form, "supplier": supplier}
     )
 
-
+@manager_required
 def supplier_delete(request, pk):
     supplier = get_object_or_404(ConditionsPercent, pk=pk)
 
@@ -132,6 +135,7 @@ def purchase_list_sorted(request):
         {"purchases": purchases}
     )
 
+@manager_required
 def purchase_edit(request, pk):
     purchase = get_object_or_404(PurchasingAmount, pk=pk)
 
@@ -150,7 +154,7 @@ def purchase_edit(request, pk):
         {"form": form}
     )
 
-
+@manager_required
 def purchase_delete(request, pk):
     purchase = get_object_or_404(PurchasingAmount, pk=pk)
 
@@ -186,6 +190,7 @@ def report_by_category(request):
 
 from .models import PaymentTerm
 
+@manager_required
 def payment_terms_suppliers(request):
     terms = PaymentTerm.objects.prefetch_related("suppliers")
 

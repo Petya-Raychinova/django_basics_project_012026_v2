@@ -1,25 +1,28 @@
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-from .managers import AppUserManager
+from .managers import AppUserManager   # 🔥 важно
 
-class AppUser(AbstractBaseUser, PermissionsMixin):
 
-    email = models.EmailField(
-        unique=True,
-    )
+class AppUser(AbstractUser):
+    username = None
 
-    is_active = models.BooleanField(
-        default=True
-    )
+    email = models.EmailField(unique=True)
 
-    is_staff = models.BooleanField(
-        default=False
+    ROLE_CHOICES = [
+        ("manager", "Мениджър"),
+        ("user", "Потребител"),
+    ]
+
+    role = models.CharField(
+        max_length=20,
+        choices=ROLE_CHOICES,
+        default="user",
     )
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["first_name", "last_name"]
 
-    objects = AppUserManager()
+    objects = AppUserManager()   # 🔥 НАЙ-ВАЖНОТО
 
     def __str__(self):
         return self.email

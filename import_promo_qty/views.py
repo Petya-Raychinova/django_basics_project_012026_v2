@@ -3,10 +3,11 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
+from accounts.decorators import manager_required
 from .forms import UploadSalesQTY
 from bonuspromo.models import PromoConditionsPercent, SalesQTY
 
-
+@manager_required
 def index(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         form = UploadSalesQTY(request.POST, request.FILES)

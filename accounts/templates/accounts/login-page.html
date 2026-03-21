@@ -1,22 +1,53 @@
 {% extends "base.html" %}
 
-{% if user.is_authenticated %}
-    <a href="{% url 'home' %}"><<< Обратно към главното меню</a>
-{% endif %}
-
 {% block header %}
-Login
+Вход за потребител
 {% endblock %}
 
 {% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="{% if message.tags == 'success' %}success-message{% else %}error-message{% endif %}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
 
 <form method="post">
     {% csrf_token %}
 
     {{ form.as_p }}
 
-    <button type="submit">Login</button>
-
+    <button type="submit">Вход</button>
 </form>
 
+<p style="margin-top:10px;">
+    Не си регистриран?
+    <a href="{% url 'accounts:register' %}">Регистрация</a>
+</p>
+
+<hr>
+
+<h3 style="color:#003366;">
+    Данни с достъп без регистрация
+</h3>
+
+<ul style="list-style-type:none; padding:0; max-width:400px; margin-top:20px;">
+
+    <li style="margin-bottom:15px;">
+        <a href="{% url 'bonuspercent:bonus_report' %}">
+            Бонус отчет
+        </a>
+    </li>
+
+    <li style="margin-bottom:15px;">
+        <a href="{% url 'bonuspromo:promo_report' %}">
+            Промоционален отчет
+        </a>
+    </li>
+
+</ul>
+
 {% endblock %}
+

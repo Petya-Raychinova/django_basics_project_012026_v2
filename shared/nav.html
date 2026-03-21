@@ -4,26 +4,42 @@
 Menu
 {% endblock %}
 
-{% block back_link %}{% endblock %}
-
 {% block header %}
 Меню
 {% endblock %}
 
-{% if user.is_authenticated %}
+{% block navigation %}
 
-    <a href="{% url 'logout' %}">Logout</a>
+<div style="display:flex; justify-content:flex-end; gap:15px; margin-bottom:20px; align-items:center;">
 
-{% else %}
+    {% if user.is_authenticated %}
 
-    <a href="{% url 'login' %}">Login</a>
-    <a href="{% url 'register' %}">Register</a>
+        <a class="nav-btn" href="{% url 'accounts:profile' %}">
+            {{ user.email }}
+        </a>
 
-{% endif %}
+        <form method="post" action="{% url 'accounts:logout' %}" style="margin:0;">
+            {% csrf_token %}
+            <button class="nav-btn" type="submit">
+                Logout
+            </button>
+        </form>
+
+    {% else %}
+
+        <a class="nav-btn" href="{% url 'accounts:login' %}">Login</a>
+        <a class="nav-btn" href="{% url 'accounts:register' %}">Register</a>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
+
 
 {% block content %}
 
-<!-- ОТЧЕТИ -->
+<!-- PUBLIC USER 2 отчета, .т.е без договорите -->
 <ul style="list-style-type:none; padding:0; max-width:600px; margin-top:30px;">
 
     <li style="margin-bottom:25px;">
@@ -38,6 +54,14 @@ Menu
         </a>
     </li>
 
+</ul>
+
+
+<!-- LOGGED USER 3 отчета -->
+{% if user.is_authenticated %}
+
+<ul style="list-style-type:none; padding:0; max-width:600px; margin-top:30px;">
+
     <li style="margin-bottom:25px;">
         <a class="menu-link" href="{% url 'contract_documents:list' %}">
             Справка с качените договори
@@ -45,6 +69,12 @@ Menu
     </li>
 
 </ul>
+
+{% endif %}
+
+
+<!-- MANAGER ONLY -->
+{% if user.is_authenticated and user.role == "manager" %}
 
 <hr class="menu-separator">
 
@@ -87,5 +117,7 @@ Menu
     </li>
 
 </ul>
+
+{% endif %}
 
 {% endblock %}
