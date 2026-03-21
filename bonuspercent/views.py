@@ -184,3 +184,13 @@ def report_by_category(request):
         {"report_data": report_data}
     )
 
+from .models import PaymentTerm
+
+def payment_terms_suppliers(request):
+    terms = PaymentTerm.objects.prefetch_related("suppliers")
+
+    return render(
+        request,
+        "bonuspercent/payment_terms_suppliers.html",
+        {"terms": terms},
+    )

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ConditionsPercent, PurchasingAmount, ProductCategory
+from .models import ConditionsPercent, PurchasingAmount, ProductCategory, PaymentTerm
 
 @admin.register(ConditionsPercent)
 class ConditionAdmin(admin.ModelAdmin):
@@ -19,4 +19,6 @@ class PurchasingAdmin(admin.ModelAdmin):
 class ProductCategoryAdmin(admin.ModelAdmin):
     list_display = ('product_category_name',)
 
-
+@admin.register(PaymentTerm)
+class PaymentTermAdmin(admin.ModelAdmin):
+    list_display = ("name", "days")

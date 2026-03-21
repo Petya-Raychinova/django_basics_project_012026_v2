@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(5!vuu0e6w+78i_d!_gts%%%gd^v3t9ddb!#krol5q46am^rmg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
@@ -34,11 +34,13 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # залагат се отделно, за да се разграничават когато са писани допълнително от зададените изначално
 PROJECT_APPS = [
+    'accounts',
     'bonuspromo',
     'bonuspercent',
     'import_purchasing_amount',
+    'import_promo_qty',
+    'contract_documents',
 ]
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -130,3 +132,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+AUTH_USER_MODEL = "accounts.AppUser"
+

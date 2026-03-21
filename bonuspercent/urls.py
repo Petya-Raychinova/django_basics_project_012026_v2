@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import index, bonus_report, supplier_list_sorted, supplier_edit, supplier_delete, purchase_list_sorted, \
-    purchase_edit, purchase_delete, report_by_category
+    purchase_edit, purchase_delete, report_by_category, payment_terms_suppliers
 
 app_name = "bonuspercent"
 
@@ -14,5 +14,5 @@ urlpatterns = [
     path("purchases/edit/<int:pk>/", purchase_edit, name="purchase_edit"),
     path("purchases/delete/<int:pk>/", purchase_delete, name="purchase_delete"),
     path("report/category/", report_by_category, name="report_by_category"),
-
+    path("payment-terms-suppliers/", payment_terms_suppliers, name="payment_terms_suppliers"),
 ]

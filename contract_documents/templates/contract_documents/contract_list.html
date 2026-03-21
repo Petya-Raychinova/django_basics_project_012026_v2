@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Справка договори{% endblock %}
+{% block header %}Качени договори{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        {% if "contract" in message.tags %}
+            <div class="message">
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<table>
+    <thead>
+        <tr>
+            <th>ЕИК</th>
+            <th>Описание</th>
+            <th>Дата на качване</th>
+            <th>Файл</th>
+            <th>Редакция</th>
+            <th>Изтриване</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for contract in contracts %}
+            <tr>
+                <td>{{ contract.supplier.eik }}</td>
+                <td>{{ contract.description }}</td>
+                <td>{{ contract.uploaded_at|date:"d.m.Y H:i" }}</td>
+                <td>
+                    <a href="{{ contract.document.url }}" target="_blank">
+                        Отвори PDF
+                    </a>
+                </td>
+                <td>
+                    <a href="{% url 'contract_documents:edit' contract.pk %}">
+                        Редактирай
+                    </a>
+                </td>
+                <td>
+                    <form method="post"
+                          action="{% url 'contract_documents:delete' contract.id %}"
+                          style="margin:0;">
+                        {% csrf_token %}
+                        <button type="submit"
+                                class="delete-btn"
+                                onclick="return confirm('Сигурни ли сте, че искате да изтриете договора?');">
+                            🗑 Изтрий
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5">Няма качени договори.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+Импорт на Excel файл за промо количества
+{% endblock %}
+
+{% block header %}
+Импорт на Excel файл за промо количества
+
+<div style="font-size:14px; margin-top:10px;">
+    <strong>Изисквания към файла:</strong><br>
+    Име на файл: <b>"upload_file_promo_qty.xlsx"</b><br>
+    Колона A: <b>"product_id"</b> – 9 цифри<br>
+    Колона B: <b>"sold_qty"</b> – до 12 цифри
+</div>
+
+{% endblock %}
+
+{% block navigation %}
+{% endblock %}
+
+{% block content %}
+
+<div class="form-box" style="max-width:450px;">
+
+    {% if messages %}
+        {% for message in messages %}
+            {% if "import" in message.tags %}
+                <div class="message">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">
+            Upload
+        </button>
+    </form>
+
+</div>
+
+{% endblock %}

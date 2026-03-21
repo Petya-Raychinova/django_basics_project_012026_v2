@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block header %}
+Logout
+{% endblock %}
+
+{% block content %}
+
+<div class="form-box">
+
+    <p>Сигурни ли сте, че искате да излезете?</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <button type="submit">Logout</button>
+
+    </form>
+
+</div>
+
+{% endblock %}

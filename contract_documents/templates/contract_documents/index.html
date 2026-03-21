@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Качване на сканиран договор{% endblock %}
+
+{% block header %}Качване на договор сканиран (PDF){% endblock %}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        {% if "contract" in message.tags %}
+            <div class="message">
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Качи сканирания договор във формат .pdf</button>
+</form>
+
+{% endblock %}

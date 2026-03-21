@@ -24,6 +24,12 @@ class ConditionsPercent(models.Model):
     )
     categories = models.ManyToManyField(ProductCategory, blank=True) #не е задължително във формата True; many-to-many relationship
 
+    payment_terms = models.ManyToManyField(
+        "PaymentTerm",
+        blank=True,
+        related_name="suppliers"
+    )
+
     def __str__(self):
         return f"{self.supplier_name} ({self.percent_condition})"
 
@@ -44,7 +50,12 @@ class PurchasingAmount(models.Model):
     def __str__(self):
         return f"{self.condition_eik.eik} - {self.purchasing_amount}"
 
+class PaymentTerm(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    days = models.PositiveIntegerField()
 
+    def __str__(self):
+        return f"{self.name} ({self.days} дни)"
 
 
 

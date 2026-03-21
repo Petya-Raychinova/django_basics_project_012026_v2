@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Списък Payment Terms и доставчици{% endblock %}
+{% block header %}Списък Payment Terms и доставчици{% endblock %}
+
+{% block content %}
+
+<table>
+    <thead>
+        <tr>
+            <th>Payment Term</th>
+            <th>Доставчик</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for term in terms %}
+            {% for supplier in term.suppliers.all %}
+                <tr>
+                    <td>{{ term.name }} ({{ term.days }} дни)</td>
+                    <td>{{ supplier.supplier_name }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td>{{ term.name }} ({{ term.days }} дни)</td>
+                    <td>Няма свързани доставчици</td>
+                </tr>
+            {% endfor %}
+        {% empty %}
+            <tr>
+                <td colspan="2">Няма въведени Payment Terms.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
