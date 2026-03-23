@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
 from pathlib import Path
-
 from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,11 +26,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(5!vuu0e6w+78i_d!_gts%%%gd^v3t9ddb!#krol5q46am^rmg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False # False for deployment;True for development
+DEBUG = os.getenv('DEBUG') == "True" # False for deployment;True for development
 
 #ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-ALLOWED_HOSTS = ["your-app-name.azurewebsites.net"]
-
+ALLOWED_HOSTS = [host for host in os.getenv('ALLOWED_HOSTS').split(',') if host]
+CSRF_TRUSTED_ORIGINS = [host for host in os.getenv('CSRF_TRUSTED_ORIGINS').split(',') if host]
 
 # Application definition
 
