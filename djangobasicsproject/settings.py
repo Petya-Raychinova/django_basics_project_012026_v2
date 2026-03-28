@@ -151,3 +151,4 @@ AUTH_USER_MODEL = "accounts.AppUser"
 LOGIN_REDIRECT_URL = 'nav'
 LOGOUT_REDIRECT_URL = 'nav'
 
+
