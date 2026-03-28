@@ -1,3 +1,4 @@
+from decimal import Decimal
 from functools import wraps
 from http.client import HTTPResponse
 from django.http import HttpRequest, HttpResponse
@@ -210,22 +211,22 @@ class BonusReportAPIView(APIView):
 
         for condition in conditions:
 
-            purchase = PurchasingAmount.objects.filter(
-                condition_eik=condition
-            ).first()
+            # Всички покупки
+            purchases = condition.ttlpurchases.all()
 
-            purchasing_amount = purchase.purchasing_amount if purchase else 0
+            # СУма на покупките
+            total_purchasing = sum(
+                p.purchasing_amount for p in purchases
+            ) if purchases else Decimal("0")
 
-            bonus = purchasing_amount * condition.percent_condition / 100
+            bonus = total_purchasing * condition.percent_condition / Decimal("100")
 
             report_data.append({
                 "eik": condition.eik,
                 "supplier_name": condition.supplier_name,
                 "percent": condition.percent_condition,
-                "purchasing_amount": purchasing_amount,
+                "purchasing_amount": total_purchasing,
                 "bonus": round(bonus, 2)
             })
 
-        serializer = BonusReportSerializer(report_data, many=True)
-
-        return Response(serializer.data)
+        return Response(report_data)
