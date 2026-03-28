@@ -29,8 +29,14 @@ SECRET_KEY = 'django-insecure-(5!vuu0e6w+78i_d!_gts%%%gd^v3t9ddb!#krol5q46am^rmg
 DEBUG = os.getenv('DEBUG') == "True" # False for deployment;True for development
 
 #ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-ALLOWED_HOSTS = [host for host in os.getenv('ALLOWED_HOSTS').split(',') if host]
-CSRF_TRUSTED_ORIGINS = [host for host in os.getenv('CSRF_TRUSTED_ORIGINS').split(',') if host]
+#ALLOWED_HOSTS = [host for host in os.getenv('ALLOWED_HOSTS').split(',') if host]
+#CSRF_TRUSTED_ORIGINS = [host for host in os.getenv('CSRF_TRUSTED_ORIGINS').split(',') if host]
+ALLOWED_HOSTS = [
+    "bonusapp-gfgtezb5cve5f0g5.polandcentral-01.azurewebsites.net"
+]
+CSRF_TRUSTED_ORIGINS = [
+    "https://bonusapp-gfgtezb5cve5f0g5.polandcentral-01.azurewebsites.net"
+]
 
 # Application definition
 
