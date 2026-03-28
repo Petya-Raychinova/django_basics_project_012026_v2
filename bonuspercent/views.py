@@ -3,13 +3,14 @@ from http.client import HTTPResponse
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.db.models import Sum, ExpressionWrapper, DecimalField, F
-
 from .forms import ConditionForm, PurchasingForm
 from .models import ConditionsPercent, PurchasingAmount, ProductCategory
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
-from .models import ConditionsPercent
 from accounts.decorators import manager_required
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .serializers import BonusReportSerializer
 
 @manager_required
 def index(request: HttpRequest) -> HTTPResponse:
@@ -199,3 +200,32 @@ def payment_terms_suppliers(request):
         "bonuspercent/payment_terms_suppliers.html",
         {"terms": terms},
     )
+
+class BonusReportAPIView(APIView):
+
+    def get(self, request):
+        report_data = []
+
+        conditions = ConditionsPercent.objects.all()
+
+        for condition in conditions:
+
+            purchase = PurchasingAmount.objects.filter(
+                condition_eik=condition
+            ).first()
+
+            purchasing_amount = purchase.purchasing_amount if purchase else 0
+
+            bonus = purchasing_amount * condition.percent_condition / 100
+
+            report_data.append({
+                "eik": condition.eik,
+                "supplier_name": condition.supplier_name,
+                "percent": condition.percent_condition,
+                "purchasing_amount": purchasing_amount,
+                "bonus": round(bonus, 2)
+            })
+
+        serializer = BonusReportSerializer(report_data, many=True)
+
+        return Response(serializer.data)

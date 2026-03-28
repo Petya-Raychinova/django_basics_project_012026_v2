@@ -14,6 +14,7 @@ urlpatterns = [
     path("import_promo/", include("import_promo_qty.urls")),
     path("contracts/", include("contract_documents.urls")),
     path("accounts/", include("accounts.urls")),
+    path('', include('bonuspercent.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 def custom_404(request, exception):

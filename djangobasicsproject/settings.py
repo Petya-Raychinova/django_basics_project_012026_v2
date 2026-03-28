@@ -56,6 +56,7 @@ PROJECT_APPS = [
     'import_purchasing_amount',
     'import_promo_qty',
     'contract_documents',
+    'rest_framework',
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
