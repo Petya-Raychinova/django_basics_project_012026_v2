@@ -28,6 +28,9 @@ SECRET_KEY = 'django-insecure-(5!vuu0e6w+78i_d!_gts%%%gd^v3t9ddb!#krol5q46am^rmg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG') == "True" # False for deployment;True for development
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_COOKIE_SECURE = True
+
 #ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 #ALLOWED_HOSTS = [host for host in os.getenv('ALLOWED_HOSTS').split(',') if host]
 #CSRF_TRUSTED_ORIGINS = [host for host in os.getenv('CSRF_TRUSTED_ORIGINS').split(',') if host]
