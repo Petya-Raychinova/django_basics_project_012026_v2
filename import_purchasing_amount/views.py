@@ -17,11 +17,15 @@ def index(request: HttpRequest) -> HttpResponse:
 
             # асинхронно извикване
             if settings.IS_PRODUCTION:
-                process_purchasing_import(excel_file.read())
+                result = process_purchasing_import(excel_file.read())
+
+                messages.success(request, f"Импортът завърши: {result}")
             else:
                 process_purchasing_import.delay(excel_file.read())
 
-            messages.success(request, "Импортът е стартиран (асинхронно).")
+                messages.success(request, "Импортът е стартиран (асинхронно).")
+
+
 
             return redirect("import_purchasing_amount:index")
 

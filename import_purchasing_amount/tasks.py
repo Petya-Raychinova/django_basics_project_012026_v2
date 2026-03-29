@@ -34,4 +34,7 @@ def process_purchasing_import(file_bytes):
 
         imported_rows += 1
 
-    return f"Imported: {imported_rows}, Skipped: {skipped_rows}"
+    if imported_rows == 0:
+        return "Няма импортирани записи! Провери дали има въведени % бонуси."
+
+    return f"Импортирани записи: {imported_rows}, Пропуснати записи: {skipped_rows}"
