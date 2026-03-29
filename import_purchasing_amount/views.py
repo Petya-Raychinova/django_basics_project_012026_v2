@@ -4,6 +4,7 @@ from django.contrib import messages
 from accounts.decorators import manager_required
 from .forms import UploadPurchasingAmount
 from .tasks import process_purchasing_import
+from django.conf import settings
 
 
 @manager_required
@@ -14,8 +15,11 @@ def index(request: HttpRequest) -> HttpResponse:
         if form.is_valid():
             excel_file = request.FILES["upload_file"]
 
-            # 🔥 тук е асинхронното извикване
-            process_purchasing_import.delay(excel_file.read())
+            # асинхронно извикване
+            if settings.IS_PRODUCTION:
+                process_purchasing_import(excel_file.read())
+            else:
+                process_purchasing_import.delay(excel_file.read())
 
             messages.success(request, "Импортът е стартиран (асинхронно).")
 
