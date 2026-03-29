@@ -12,6 +12,7 @@ from accounts.decorators import manager_required
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import BonusReportSerializer
+from rest_framework.permissions import IsAuthenticated
 
 @manager_required
 def index(request: HttpRequest) -> HTTPResponse:
@@ -203,6 +204,7 @@ def payment_terms_suppliers(request):
     )
 
 class BonusReportAPIView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         report_data = []
