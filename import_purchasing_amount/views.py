@@ -4,7 +4,6 @@ from django.contrib import messages
 from accounts.decorators import manager_required
 from .forms import UploadPurchasingAmount
 from .tasks import process_purchasing_import
-from django.conf import settings
 
 
 @manager_required
@@ -15,17 +14,15 @@ def index(request: HttpRequest) -> HttpResponse:
         if form.is_valid():
             excel_file = request.FILES["upload_file"]
 
-            # асинхронно извикване
-            if settings.IS_PRODUCTION:
-                result = process_purchasing_import(excel_file.read())
-
-                messages.success(request, f"Импортът завърши: {result}")
-            else:
+            try:
+                #асинхронно (ако има Celery + Redis)
                 process_purchasing_import.delay(excel_file.read())
-
                 messages.success(request, "Импортът е стартиран (асинхронно).")
 
-
+            except Exception:
+                #ако Celery не работи (например в Azure)
+                result = process_purchasing_import(excel_file.read())
+                messages.success(request, f"Импортът завърши: {result}")
 
             return redirect("import_purchasing_amount:index")
 
