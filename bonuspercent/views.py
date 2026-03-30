@@ -37,7 +37,7 @@ def index(request: HttpRequest) -> HTTPResponse:
 
     return render(
         request,
-        "bonuspercent\index.html",
+        "bonuspercent/index.html",
         {
             "condition_form": condition_form,
             "purchasing_form": purchasing_form
