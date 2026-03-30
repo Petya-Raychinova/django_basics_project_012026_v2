@@ -1,5 +1,7 @@
 from openpyxl import Workbook
 from django.core.mail import EmailMessage
+import os
+from django.conf import settings
 
 def generate_report():
     from bonuspercent.models import ConditionsPercent, PurchasingAmount
@@ -22,7 +24,8 @@ def generate_report():
 
         ws.append([eik, float(amount), float(percent), float(bonus)])
 
-    file_path = "daily_report.xlsx"
+    file_path = os.path.join(settings.MEDIA_ROOT, "daily_report.xlsx")
+
     wb.save(file_path)
 
     #мейл

@@ -175,7 +175,18 @@ STATIC_URL = 'static/'
 #STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# STORAGES = {
+#     "staticfiles": {
+#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+#     },
+# }
+
 STORAGES = {
+    #за upload на файлове (договори)
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    #за CSS/JS (whitenoise)
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
