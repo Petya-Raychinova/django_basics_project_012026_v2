@@ -58,6 +58,7 @@ PROJECT_APPS = [
     'import_promo_qty',
     'contract_documents',
     'rest_framework',
+    'reports',
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -193,6 +194,13 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 
 IS_PRODUCTION = "WEBSITE_HOSTNAME" in os.environ
+
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "apikey"
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = "petya.raychinova@gmail.com"
 
 
 
