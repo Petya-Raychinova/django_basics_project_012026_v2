@@ -32,7 +32,7 @@ def generate_report():
     email = EmailMessage(
         subject="Daily Bonus Report",
         body="В прикачения файл е дневният отчет за бонус от покупката.",
-        from_email="petya.raychinova@gmail.com",
+        from_email=None, #тест, защото е оторизиран и пак дава грешка
         to=["petya.raychinova@gmail.com"],
     )
 
