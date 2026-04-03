@@ -31,7 +31,7 @@ class ConditionsPercent(models.Model):
     )
 
     def __str__(self):
-        return f"{self.supplier_name} ({self.percent_condition})"
+        return f"{self.supplier_name} ({self.percent_condition:.2f})"
 
 # Един доставчик може да има няколко реда с покупки
 class PurchasingAmount(models.Model):
