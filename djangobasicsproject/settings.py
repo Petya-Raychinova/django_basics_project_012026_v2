@@ -40,9 +40,21 @@ SESSION_COOKIE_SAMESITE = 'None'
 #ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 #ALLOWED_HOSTS = [host for host in os.getenv('ALLOWED_HOSTS').split(',') if host]
 #CSRF_TRUSTED_ORIGINS = [host for host in os.getenv('CSRF_TRUSTED_ORIGINS').split(',') if host]
-ALLOWED_HOSTS = [
-    "bonusapp-gfgtezb5cve5f0g5.polandcentral-01.azurewebsites.net"
-]
+# ALLOWED_HOSTS = [
+#     "bonusapp-gfgtezb5cve5f0g5.polandcentral-01.azurewebsites.net"
+# ]
+
+# ALLOWED_HOSTS = [
+#     'bonusapp-gfgtezb5cve5f0g5.polandcentral-01.azurewebsites.net',
+#     '127.0.0.1',
+#     'localhost',
+# ]
+
+ALLOWED_HOSTS = os.getenv(
+    "ALLOWED_HOSTS",
+    "127.0.0.1,localhost"
+).split(",")
+
 CSRF_TRUSTED_ORIGINS = [
     "https://bonusapp-gfgtezb5cve5f0g5.polandcentral-01.azurewebsites.net"
 ]
