@@ -4,7 +4,7 @@
 Project Overview
 ---------------------------------
 This project is a Django-based web application for managing supplier bonus agreements and promotional discounts.
-The system allows management of master data, sotring and controlling contract agreements and reporting based on transactional data. 
+The system allows management of master data, storing and controlling contract agreements and reporting based on transactional data. 
 Managing supplier bonus percentages
 Input of purchasing transactions regarding amounts
 Importing purchasing data from Excel files
@@ -13,17 +13,47 @@ Managing promotional discount conditions
 Input of sold quantities for promotional products
 Generating promotional report
 Each purchasing record is linked to exactly one supplier, while a supplier can have multiple purchasing records.(One-to-Many relationship). Same logic applied to promotional products and their sales quantities
+REST API for bonus reporting 
+Asynchronous report generation and email sending
+Authentication and role-based access control
+Deployment on Azure cloud environment
 
-The application is built using Django and PostgreSQL and follows standard Django project structure and best practices.
+The application is built using Django.
+PostgreSQL is used for local development, while SQLite is used in the deployed Azure environment.
 
 -------------------------------
 Python 3.12
 PostgreSQL 14 or higher (tested with PostgreSQL 17)
 
 -------------------------------
+Deployment (Azure)
+-------------------------------
+The application is deployed and accessible via Microsoft Azure App Service.
+The deployed version is used for evaluation and reflects the latest version of the project from the GitHub repository.
+Production configuration includes:
+- Gunicorn as application server
+- Environment variables for sensitive data
+- Static file handling with WhiteNoise
+- DEBUG set to False
+- SQLite database (Azure temporary storage)
+- Email service configured via SMTP provider
+- Email sending via SMTP (SendGrid or similar provider)
+
+-------------------------------
+Application URL
+-------------------------------
+[Open the application](https://bonusapp-gfgtezb5cve5f0g5.polandcentral-01.azurewebsites.net)
+
+-------------------------------
 Database Config
 -------------------------------
-The project uses PostgreSQL as the database engine.
+The project uses different databases depending on the environment:
+
+Local Development:
+PostgreSQL is used with environment variables.
+
+Production (Azure):
+SQLite is used as a lightweight database stored in the Azure environment.
 
 Environment variables are required for local testing.
 
@@ -35,9 +65,7 @@ DB_NAME=your_database_name
 DB_USER=your_database_user
 DB_PASS=your_database_password
 DB_PORT=5432
-
-The database host is set to:
-127.0.0.1
+DB_HOST=127.0.0.1
 
 Make sure PostgreSQL is installed and running locally before starting the project.
 
@@ -119,6 +147,59 @@ Category-based Supplier Report
 Excel Import for Purchasing Data
 Success notifications using Django Messages Framework
 Shared base template layout
+
+-----------------------------------------
+Authentication & User Management
+----------------------------------------
+Implemented custom user model (AppUser)
+User registration, login and logout functionality
+Role-based access control (e.g. manager permissions)
+Public vs private access (some pages require authentication)
+
+-----------------------------------------
+REST API for Bonus Reporting
+----------------------------------------
+Added API endpoint for bonus report using Django REST Framework
+JSON response for external integrations
+Secured access with authentication permissions
+-----------------------------------------
+
+Asynchronous Report Generation & Email Sending
+----------------------------------------
+Implemented automated report generation using background task processing.
+Designed to support asynchronous execution (e.g. Celery), but currently executed synchronously in the deployed environment.
+
+-----------------------------------------
+Testing
+----------------------------------------
+Added unit tests for:
+Business logic
+Views
+User functionality
+
+-----------------------------------------
+Environment Variables (Azure)
+----------------------------------------
+Environment variables are configured in Azure App Service under:
+
+Settings → Environment Variables
+
+Configured variables include:
+- SECRET_KEY
+- DEBUG
+- ALLOWED_HOSTS
+- CSRF_TRUSTED_ORIGINS
+- Database credentials (DB_NAME, DB_USER, DB_PASS, DB_PORT)
+- AZURE_POSTGRESQL_CONNECTIONSTRING
+
+These variables are used to securely configure the application in production.
+
+-----------------------------------------
+Production Limitations
+----------------------------------------
+SQLite database is stored in temporary storage and may be reset
+Celery/Redis is not configured in the deployed environment
+Email functionality requires a verified SMTP sender
 
 -----------------------------------------
 Security
