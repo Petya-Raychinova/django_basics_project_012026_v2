@@ -99,6 +99,21 @@ Example:
   - Payment Term 30 - 30 days
   - Payment Term 60 - 60 days
   
+-----------------------------------------
+Database Migrations (Azure)
+-----------------------------------------
+After deployment, database migrations must be applied.
+
+In Azure App Service, migrations can be executed via:
+
+python manage.py migrate
+
+Note:
+If migrations are not applied, the application may return errors 
+(e.g. missing tables such as django_session).
+In the deployed environment, migrations may need to be re-applied 
+if the database is reset (SQLite temporary storage).
+
 --------------------------------
 Setup
 ---------------------------------
