@@ -3,7 +3,7 @@ from django.core.mail import EmailMessage
 import os
 from django.conf import settings
 
-def generate_report():
+def generate_report(user_email):
     from bonuspercent.models import ConditionsPercent, PurchasingAmount
 
     wb = Workbook()
@@ -33,7 +33,7 @@ def generate_report():
         subject="Daily Bonus Report",
         body="В прикачения файл е дневният отчет за бонус от покупката.",
         from_email=settings.DEFAULT_FROM_EMAIL, #тест, защото е оторизиран и пак дава грешка
-        to=["petya.raychinova@gmail.com"],
+        to=[user_email],
     )
 
     email.attach_file(file_path)
