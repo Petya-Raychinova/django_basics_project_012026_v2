@@ -46,6 +46,16 @@ Live Demo:
 https://www.bonusapp-bg.eu
 
 -------------------------------
+Live API
+-------------------------------
+Description:
+Returns bonus report data in JSON format.
+
+Authentication:
+Requires logged-in user.
+https://www.bonusapp-bg.eu/api/report/bonus/
+
+-------------------------------
 Database Config
 -------------------------------
 The project uses different databases depending on the environment:
