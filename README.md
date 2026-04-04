@@ -25,39 +25,23 @@ PostgreSQL is used for local development, while SQLite is used in the deployed A
 Python 3.12
 PostgreSQL 14 or higher (tested with PostgreSQL 17)
 
--------------------------------
-Deployment (Azure)
--------------------------------
-The application is deployed and accessible via Microsoft Azure App Service.
-The deployed version is used for evaluation and reflects the latest version of the project from the GitHub repository.
-Production configuration includes:
-- Gunicorn as application server
-- Environment variables for sensitive data
-- Static file handling with WhiteNoise
-- DEBUG set to False
-- SQLite database (Azure temporary storage)
-- Email service configured via SMTP provider
-- Email sending via SMTP (SendGrid or similar provider)
+--------------------------------
+Setup
+---------------------------------
+Installation & Setup
 
--------------------------------
-Application URL
--------------------------------
-Live Demo:
-https://www.bonusapp-bg.eu
+Create virtual environment
+python -m venv .venv
 
--------------------------------
-Live API
--------------------------------
-Description:
-Returns bonus report data in JSON format.
+Activate the environment (Windows)
+.venv\Scripts\activate
 
-Authentication:
-Requires logged-in user.
-https://www.bonusapp-bg.eu/api/report/bonus/
+Install dependencies
+pip install -r requirements.txt
 
--------------------------------
+--------------------------------
 Database Config
--------------------------------
+---------------------------------
 The project uses different databases depending on the environment:
 
 Local Development:
@@ -80,7 +64,49 @@ DB_HOST=127.0.0.1
 
 Make sure PostgreSQL is installed and running locally before starting the project.
 
-  
+-----------------------------------------
+Database Migrations (Azure)
+-----------------------------------------
+After deployment, database migrations must be applied.
+
+In Azure App Service, migrations can be executed via:
+
+python manage.py migrate
+
+Note:
+If migrations are not applied, the application may return errors 
+(e.g. missing tables such as django_session).
+In the deployed environment, migrations may need to be re-applied 
+if the database is reset (SQLite temporary storage).
+
+--------------------------------
+Run the development server
+---------------------------------
+Apply migrations
+python manage.py migrate
+
+Run the development server
+python manage.py runserver
+
+Open in browser:
+http://127.0.0.1:8000/
+
+-------------------------------
+Application URL
+-------------------------------
+Live Demo:
+https://www.bonusapp-bg.eu
+
+-------------------------------
+Live API
+-------------------------------
+Description:
+Returns bonus report data in JSON format.
+
+Authentication:
+Requires logged-in user.
+https://www.bonusapp-bg.eu/api/report/bonus/
+
 --------------------------------
 Demo Data
 ---------------------------------
@@ -98,44 +124,6 @@ Example:
 - Payment terms:
   - Payment Term 30 - 30 days
   - Payment Term 60 - 60 days
-  
------------------------------------------
-Database Migrations (Azure)
------------------------------------------
-After deployment, database migrations must be applied.
-
-In Azure App Service, migrations can be executed via:
-
-python manage.py migrate
-
-Note:
-If migrations are not applied, the application may return errors 
-(e.g. missing tables such as django_session).
-In the deployed environment, migrations may need to be re-applied 
-if the database is reset (SQLite temporary storage).
-
---------------------------------
-Setup
----------------------------------
-Installation & Setup
-
-Create virtual environment
-python -m venv .venv
-
-Activate the environment (Windows)
-.venv\Scripts\activate
-
-Install dependencies
-pip install -r requirements.txt
-
-Apply migrations
-python manage.py migrate
-
-Run the development server
-python manage.py runserver
-
-Open in browser:
-http://127.0.0.1:8000/
 
 -----------------------------------
 Project Structure
@@ -160,9 +148,11 @@ One supplier can be linked to multiple product categories.
 One product category can include multiple suppliers.
 Django automatically creates an intermediate table to manage this relationship.
 This structure allows information regarding supliers' categories in their product portfolio.
+
 Purchasing (Transaction Data) - Reference to Supplier (ForeignKey)
 Purchasing amount (value excl. VAT)
 Calculated bonus amount
+
 Relationship:
 One supplier can have multiple purchasing records.
 Each purchasing record is linked to exactly one supplier - (One-to-Many relationship)
@@ -172,9 +162,11 @@ Product ID
 Product name
 Purchasing price
 Discount percentage by agreement
+
 Sales Quantity
 Reference to promotional product
 Sold quantity
+
 Promotional bonus calculation formula:
 Total Sold Quantity × Purchasing Price × % Discount
 
@@ -207,8 +199,8 @@ REST API for Bonus Reporting
 Added API endpoint for bonus report using Django REST Framework
 JSON response for external integrations
 Secured access with authentication permissions
------------------------------------------
 
+-----------------------------------------
 Asynchronous Report Generation & Email Sending
 ----------------------------------------
 Implemented automated report generation using background task processing.
@@ -221,6 +213,21 @@ Added unit tests for:
 Business logic
 Views
 User functionality
+
+-----------------------------------------
+Deployment (Azure)
+----------------------------------------
+The application is deployed and accessible via Microsoft Azure App Service.
+The deployed version is used for evaluation and reflects the latest version of the project from the GitHub repository.
+
+Production configuration includes:
+- Gunicorn as application server
+- Environment variables for sensitive data
+- Static file handling with WhiteNoise
+- DEBUG set to False
+- SQLite database (Azure temporary storage)
+- Email service configured via SMTP provider
+- Email sending via SMTP (SendGrid or similar provider)
 
 -----------------------------------------
 Environment Variables (Azure)
