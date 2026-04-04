@@ -42,7 +42,8 @@ Production configuration includes:
 -------------------------------
 Application URL
 -------------------------------
-[Open the application](https://bonusapp-gfgtezb5cve5f0g5.polandcentral-01.azurewebsites.net)
+Live Demo:
+https://www.bonusapp-bg.eu
 
 -------------------------------
 Database Config
