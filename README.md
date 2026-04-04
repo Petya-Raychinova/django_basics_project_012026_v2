@@ -80,6 +80,25 @@ DB_HOST=127.0.0.1
 
 Make sure PostgreSQL is installed and running locally before starting the project.
 
+  
+--------------------------------
+Demo Data
+---------------------------------
+The application uses a temporary database in Azure.
+If no data is visible, please add sample data from the Django Admin:
+
+/admin/
+
+Example:
+- Product categories:
+  - Млечни продукти
+  - Хляб и хлебни изделия
+  - Месо и месни продукти
+
+- Payment terms:
+  - Payment Term 30 - 30 days
+  - Payment Term 60 - 60 days
+  
 --------------------------------
 Setup
 ---------------------------------
